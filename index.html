@@ -1,1 +1,1121 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Élixir du Terroir — Secrets de la Nature</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil:   #2C1A0E;
+    --bark:   #4A2E1A;
+    --moss:   #3D5A3E;
+    --sage:   #6B8C6B;
+    --straw:  #C8A96E;
+    --cream:  #F7F0E3;
+    --petal:  #E8D5B0;
+    --gold:   #B8860B;
+    --fog:    #D4C9B5;
+    --white:  #FDFAF4;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--white);
+    color: var(--soil);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ── Custom cursor ─────────────────────────────────────────────── */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--moss);
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform .15s ease, width .2s, height .2s, background .2s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--straw);
+    border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform .35s ease, width .3s, height .3s, opacity .3s;
+  }
+  body:has(a:hover) .cursor, body:has(button:hover) .cursor {
+    width: 6px; height: 6px; background: var(--gold);
+  }
+  body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring {
+    width: 52px; height: 52px; border-color: var(--gold); opacity: .6;
+  }
+
+  /* ── Noise overlay ─────────────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px;
+  }
+
+  /* ── NAV ────────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    mix-blend-mode: normal;
+    transition: background .4s, padding .4s;
+  }
+  nav.scrolled {
+    background: rgba(247,240,227,.92);
+    backdrop-filter: blur(12px);
+    padding: 1rem 4rem;
+    border-bottom: 1px solid rgba(184,134,11,.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; letter-spacing: .06em;
+    color: var(--soil); text-decoration: none;
+  }
+  .nav-logo span { color: var(--moss); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--bark); text-decoration: none; font-weight: 400;
+    position: relative; padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width .3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--moss); color: var(--white) !important;
+    padding: .55rem 1.4rem; border-radius: 2px;
+    font-size: .78rem !important; letter-spacing: .12em;
+    transition: background .25s !important;
+  }
+  .nav-cta:hover { background: var(--soil) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ───────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9rem 5rem 5rem 8rem;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: .72rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 1.6rem;
+    display: flex; align-items: center; gap: .8rem;
+    opacity: 0; animation: fadeUp .8s .2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 1px; background: var(--gold);
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 5vw, 5.5rem);
+    line-height: 1.06; font-weight: 300; color: var(--soil);
+    margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp .9s .35s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--moss); }
+  .hero-sub {
+    font-size: 1rem; line-height: 1.7; color: var(--bark);
+    max-width: 420px; margin-bottom: 2.8rem; font-weight: 300;
+    opacity: 0; animation: fadeUp .9s .5s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1.2rem; align-items: center;
+    opacity: 0; animation: fadeUp .9s .65s forwards;
+  }
+  .btn-primary {
+    background: var(--moss); color: var(--white);
+    padding: 1rem 2.4rem; border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: .82rem;
+    letter-spacing: .14em; text-transform: uppercase; cursor: none;
+    position: relative; overflow: hidden; transition: background .3s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--gold); transform: translateX(-100%);
+    transition: transform .4s cubic-bezier(.25,.46,.45,.94);
+  }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-ghost {
+    color: var(--bark); text-decoration: none;
+    font-size: .82rem; letter-spacing: .12em; text-transform: uppercase;
+    display: flex; align-items: center; gap: .6rem; border: none;
+    background: none; cursor: none; font-family: 'Jost', sans-serif;
+    transition: color .25s;
+  }
+  .btn-ghost:hover { color: var(--moss); }
+  .btn-ghost .arrow { transition: transform .25s; }
+  .btn-ghost:hover .arrow { transform: translateX(5px); }
+
+  /* Hero stats */
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2rem;
+    border-top: 1px solid rgba(44,26,14,.1);
+    opacity: 0; animation: fadeUp .9s .8s forwards;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--moss);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--fog); margin-top: .3rem;
+  }
+
+  /* Hero right visual */
+  .hero-right {
+    position: relative; overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-visual {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-circle {
+    width: 72%; aspect-ratio: 1;
+    background: radial-gradient(ellipse at 40% 35%,
+      rgba(107,140,107,.35) 0%,
+      rgba(61,90,62,.6) 45%,
+      rgba(44,26,14,.85) 100%);
+    border-radius: 50%; position: relative;
+    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 40px 80px rgba(44,26,14,.3);
+  }
+  .hero-bottle {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 7rem; filter: drop-shadow(0 20px 40px rgba(0,0,0,.4));
+  }
+  .hero-label {
+    position: absolute; bottom: -20px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--white); padding: .7rem 1.6rem;
+    border-radius: 2px; white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(44,26,14,.12);
+  }
+  .hero-label-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .95rem; color: var(--soil); letter-spacing: .04em;
+  }
+  .hero-label-sub {
+    font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--gold); margin-top: .1rem; text-align: center;
+  }
+
+  /* Floating botanical elements */
+  .flora { position: absolute; pointer-events: none; opacity: 0;
+           animation: floraIn 1s forwards; }
+  .flora-1 { top: 12%; left: 8%; font-size: 2.5rem;
+              animation-delay: 1s; transform: rotate(-15deg); }
+  .flora-2 { top: 22%; right: 10%; font-size: 1.8rem;
+              animation-delay: 1.2s; transform: rotate(25deg); }
+  .flora-3 { bottom: 18%; left: 12%; font-size: 2rem;
+              animation-delay: 1.4s; transform: rotate(10deg); }
+  .flora-4 { bottom: 28%; right: 8%; font-size: 1.5rem;
+              animation-delay: 1.6s; transform: rotate(-20deg); }
+
+  /* ── MARQUEE STRIP ──────────────────────────────────────────────── */
+  .marquee-strip {
+    background: var(--moss); color: var(--cream);
+    padding: .9rem 0; overflow: hidden;
+    display: flex; gap: 0;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-track span {
+    font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+    font-weight: 400; flex-shrink: 0;
+  }
+  .marquee-track .dot {
+    color: var(--straw); font-size: .5rem; align-self: center;
+  }
+
+  /* ── STORY ──────────────────────────────────────────────────────── */
+  .story {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 85vh; overflow: hidden;
+  }
+  .story-visual {
+    background: var(--soil);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .story-bg-text {
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22vw; font-weight: 300; color: rgba(255,255,255,.03);
+    white-space: nowrap; user-select: none;
+    top: 50%; transform: translateY(-50%) rotate(-8deg);
+  }
+  .story-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; gap: 2px;
+    width: 100%; height: 100%;
+  }
+  .story-cell {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4.5rem;
+    position: relative; overflow: hidden;
+  }
+  .story-cell-1 { background: rgba(107,140,107,.25); }
+  .story-cell-2 { background: rgba(184,134,11,.15); }
+  .story-cell-3 { background: rgba(61,90,62,.35); }
+  .story-cell-4 { background: rgba(74,46,26,.4); }
+  .story-cell::after {
+    content: attr(data-label);
+    position: absolute; bottom: .8rem; left: 0; right: 0;
+    text-align: center; font-size: .6rem; letter-spacing: .18em;
+    text-transform: uppercase; color: rgba(247,240,227,.5);
+    font-family: 'Jost', sans-serif;
+  }
+
+  .story-content {
+    padding: 6rem 6rem 6rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-tag {
+    font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+  .story-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+    font-weight: 300; line-height: 1.15; margin-bottom: 1.6rem;
+    color: var(--soil);
+  }
+  .story-content h2 em { color: var(--moss); font-style: italic; }
+  .story-content p {
+    font-size: .95rem; line-height: 1.8; color: var(--bark);
+    font-weight: 300; margin-bottom: 1.2rem; max-width: 440px;
+  }
+  .story-content blockquote {
+    margin: 2rem 0; padding: 1.4rem 1.8rem;
+    border-left: 3px solid var(--straw);
+    background: rgba(200,169,110,.08);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic; color: var(--bark);
+    line-height: 1.6;
+  }
+
+  /* ── PRODUCTS ───────────────────────────────────────────────────── */
+  .products {
+    padding: 8rem 6rem;
+    background: var(--cream);
+  }
+  .products-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 4rem;
+  }
+  .products-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300; color: var(--soil); line-height: 1.1;
+  }
+  .products-header h2 em { color: var(--moss); font-style: italic; }
+  .products-note {
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); padding-bottom: .4rem;
+  }
+
+  .products-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .product-card {
+    background: var(--white); border-radius: 3px;
+    overflow: hidden; position: relative;
+    transition: transform .4s cubic-bezier(.25,.46,.45,.94),
+                box-shadow .4s;
+    cursor: none;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba(44,26,14,.14);
+  }
+  .product-card.featured {
+    grid-row: span 2;
+  }
+  .card-visual {
+    background: linear-gradient(135deg, var(--soil), var(--moss));
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem; position: relative; overflow: hidden;
+  }
+  .product-card.featured .card-visual { aspect-ratio: auto; min-height: 340px; }
+  .card-visual::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40%; background: linear-gradient(transparent, rgba(44,26,14,.4));
+  }
+  .card-badge {
+    position: absolute; top: 1rem; left: 1rem; z-index: 2;
+    background: var(--straw); color: var(--soil);
+    font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
+    padding: .3rem .7rem; border-radius: 1px; font-weight: 500;
+  }
+  .card-body { padding: 1.6rem; }
+  .card-category {
+    font-size: .64rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--sage); margin-bottom: .5rem;
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem; font-weight: 400; color: var(--soil);
+    line-height: 1.2; margin-bottom: .6rem;
+  }
+  .card-desc {
+    font-size: .82rem; color: var(--bark); line-height: 1.6;
+    font-weight: 300; margin-bottom: 1.2rem;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: var(--soil); font-weight: 300;
+  }
+  .card-price .currency { font-size: 1rem; vertical-align: super; }
+  .card-add {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--moss); color: var(--white);
+    border: none; font-size: 1.2rem; cursor: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .25s, transform .25s;
+  }
+  .card-add:hover { background: var(--gold); transform: scale(1.1) rotate(90deg); }
+  .card-stars { font-size: .7rem; color: var(--straw); letter-spacing: .05em; }
+  .card-reviews { font-size: .68rem; color: var(--fog); margin-left: .4rem; }
+
+  /* ── BENEFITS ───────────────────────────────────────────────────── */
+  .benefits {
+    padding: 8rem 6rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+    background: var(--soil); color: var(--cream);
+  }
+  .benefits-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 3.8vw, 4rem);
+    font-weight: 300; line-height: 1.12; margin-bottom: 1.8rem;
+    color: var(--cream);
+  }
+  .benefits-left h2 em { color: var(--straw); font-style: italic; }
+  .benefits-left p {
+    font-size: .92rem; line-height: 1.8; color: var(--fog);
+    font-weight: 300; margin-bottom: 2.4rem;
+  }
+  .benefit-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .benefit-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem; border-radius: 2px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.06);
+    transition: background .3s, border-color .3s;
+  }
+  .benefit-item:hover {
+    background: rgba(107,140,107,.15);
+    border-color: rgba(107,140,107,.3);
+  }
+  .benefit-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: .1rem; }
+  .benefit-text h4 {
+    font-size: .85rem; letter-spacing: .08em; font-weight: 500;
+    color: var(--straw); margin-bottom: .3rem;
+  }
+  .benefit-text p {
+    font-size: .8rem; color: var(--fog); line-height: 1.6;
+    margin: 0;
+  }
+
+  .benefits-right {
+    position: relative;
+  }
+  .benefit-visual-main {
+    background: radial-gradient(ellipse at 50% 40%,
+      rgba(107,140,107,.4), rgba(44,26,14,1));
+    border-radius: 4px; aspect-ratio: .8;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1.2rem; overflow: hidden; position: relative;
+  }
+  .benefit-visual-main::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 39px,
+      rgba(255,255,255,.02) 40px
+    );
+  }
+  .benefit-emoji-big { font-size: 6rem; filter: drop-shadow(0 10px 30px rgba(0,0,0,.5)); }
+  .benefit-badge-row { display: flex; gap: .8rem; }
+  .b-badge {
+    background: rgba(247,240,227,.1); border: 1px solid rgba(247,240,227,.15);
+    border-radius: 50px; padding: .4rem .9rem;
+    font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--petal);
+  }
+  .float-card {
+    position: absolute; background: var(--white); color: var(--soil);
+    padding: .9rem 1.2rem; border-radius: 3px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.35);
+    font-size: .78rem; line-height: 1.5;
+  }
+  .float-card-1 { top: 12%; left: -18%; }
+  .float-card-2 { bottom: 14%; right: -16%; }
+  .float-card strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; color: var(--moss);
+  }
+
+  /* ── TESTIMONIALS ───────────────────────────────────────────────── */
+  .testimonials {
+    padding: 8rem 6rem;
+    background: var(--white);
+  }
+  .testimonials-header { text-align: center; margin-bottom: 4rem; }
+  .testimonials-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    font-weight: 300; color: var(--soil); margin-top: .8rem;
+  }
+  .testimonials-header h2 em { color: var(--moss); font-style: italic; }
+
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .testi-card {
+    padding: 2rem 2rem 1.8rem;
+    border: 1px solid rgba(44,26,14,.08);
+    border-radius: 3px; position: relative;
+    transition: border-color .3s, transform .3s;
+  }
+  .testi-card:hover {
+    border-color: rgba(107,140,107,.3);
+    transform: translateY(-4px);
+  }
+  .testi-card::before {
+    content: '"';
+    position: absolute; top: -.5rem; left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; color: var(--straw); opacity: .4; line-height: 1;
+  }
+  .testi-stars { color: var(--straw); font-size: .9rem; margin-bottom: 1rem; }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic; color: var(--bark);
+    line-height: 1.7; margin-bottom: 1.4rem;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--sage); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .testi-name { font-size: .82rem; font-weight: 500; color: var(--soil); }
+  .testi-loc { font-size: .7rem; color: var(--fog); letter-spacing: .06em; }
+  .testi-tiktok {
+    margin-left: auto; font-size: .65rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: .3rem;
+  }
+
+  /* ── CTA SECTION ────────────────────────────────────────────────── */
+  .cta-section {
+    min-height: 70vh;
+    background: linear-gradient(135deg, var(--soil) 0%, var(--moss) 60%, var(--bark) 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 6rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%,
+      rgba(200,169,110,.12) 0%, transparent 65%);
+  }
+  .cta-section::after {
+    content: '🌿';
+    position: absolute; font-size: 40vw; opacity: .03;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-tag {
+    font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--straw); margin-bottom: 1.4rem;
+  }
+  .cta-inner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 5.5rem);
+    font-weight: 300; color: var(--white); line-height: 1.08;
+    margin-bottom: 1.4rem;
+  }
+  .cta-inner h2 em { font-style: italic; color: var(--straw); }
+  .cta-inner p {
+    font-size: .98rem; color: rgba(247,240,227,.7);
+    font-weight: 300; line-height: 1.7; max-width: 480px;
+    margin: 0 auto 2.6rem;
+  }
+  .cta-form {
+    display: flex; gap: 0; max-width: 420px; margin: 0 auto;
+    border: 1px solid rgba(247,240,227,.25); border-radius: 2px;
+    overflow: hidden; background: rgba(255,255,255,.05);
+    backdrop-filter: blur(8px);
+  }
+  .cta-input {
+    flex: 1; padding: 1rem 1.4rem;
+    background: transparent; border: none; outline: none;
+    color: var(--white); font-family: 'Jost', sans-serif;
+    font-size: .88rem; font-weight: 300;
+  }
+  .cta-input::placeholder { color: rgba(247,240,227,.4); }
+  .cta-btn {
+    padding: 1rem 1.8rem; background: var(--straw);
+    border: none; color: var(--soil);
+    font-family: 'Jost', sans-serif; font-size: .78rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    font-weight: 500; cursor: none;
+    transition: background .25s;
+    white-space: nowrap;
+  }
+  .cta-btn:hover { background: var(--gold); }
+  .cta-fine {
+    font-size: .68rem; color: rgba(247,240,227,.35);
+    margin-top: 1rem; letter-spacing: .08em;
+  }
+
+  /* ── TRUST BAR ──────────────────────────────────────────────────── */
+  .trust-bar {
+    background: var(--cream); padding: 2.8rem 6rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 2rem;
+    border-bottom: 1px solid rgba(44,26,14,.08);
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: .8rem;
+    font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--bark);
+  }
+  .trust-icon { font-size: 1.4rem; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────────── */
+  footer {
+    background: var(--soil); color: var(--fog);
+    padding: 4rem 6rem 2rem;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand .nav-logo { color: var(--cream); font-size: 1.7rem; }
+  .footer-brand p {
+    font-size: .83rem; line-height: 1.7; color: var(--fog);
+    font-weight: 300; margin-top: 1rem; max-width: 280px;
+  }
+  .footer-social { display: flex; gap: .8rem; margin-top: 1.6rem; }
+  .social-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; cursor: none; text-decoration: none;
+    transition: background .25s, border-color .25s;
+  }
+  .social-btn:hover { background: rgba(107,140,107,.3); border-color: var(--sage); }
+  .footer-col h4 {
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--straw); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: .6rem; }
+  .footer-col a {
+    font-size: .83rem; color: var(--fog); text-decoration: none;
+    transition: color .25s; font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--straw); }
+  .footer-bottom {
+    grid-column: 1 / -1; padding-top: 2rem; margin-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,.07);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: .72rem; color: rgba(212,201,181,.4); }
+
+  /* ── ANIMATIONS ─────────────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%       { transform: translateY(-12px) rotate(1.5deg); }
+    66%       { transform: translateY(6px) rotate(-1deg); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes floraIn {
+    from { opacity: 0; transform: rotate(var(--r, 0)) scale(0.5); }
+    to   { opacity: .6; transform: rotate(var(--r, 0)) scale(1); }
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Élixir <span>du Terroir</span></a>
+  <ul class="nav-links">
+    <li><a href="#story">Notre histoire</a></li>
+    <li><a href="#produits">Élixirs</a></li>
+    <li><a href="#bienfaits">Bienfaits</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#commander" class="nav-cta">Commander</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Depuis les terres ancestrales</div>
+    <h1>La <em>nature</em><br>à l'état<br>pur</h1>
+    <p class="hero-sub">Des élixirs botaniques issus du terroir français, récoltés à la main et préparés selon des méthodes ancestrales pour vous reconnecter à l'essentiel.</p>
+    <div class="hero-actions">
+      <a href="#produits" class="btn-primary"><span>Découvrir les élixirs</span></a>
+      <button class="btn-ghost" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">
+        Notre histoire <span class="arrow">→</span>
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12K+</div>
+        <div class="stat-label">Clients satisfaits</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Naturel & Bio</div>
+      </div>
+      <div>
+        <div class="stat-num">47</div>
+        <div class="stat-label">Plantes du terroir</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-circle">
+        <div class="hero-bottle">🌿</div>
+        <div class="hero-label">
+          <div class="hero-label-text">Élixir Millésime</div>
+          <div class="hero-label-sub">Collection Automne 2024</div>
+        </div>
+      </div>
+    </div>
+    <span class="flora flora-1">🌾</span>
+    <span class="flora flora-2">🍃</span>
+    <span class="flora flora-3">🌸</span>
+    <span class="flora flora-4">🌿</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marquee">
+    <span>Récolte artisanale</span><span class="dot">✦</span>
+    <span>100% Naturel</span><span class="dot">✦</span>
+    <span>Certifié Bio</span><span class="dot">✦</span>
+    <span>Terroir Français</span><span class="dot">✦</span>
+    <span>Sans additifs</span><span class="dot">✦</span>
+    <span>Traditions ancestrales</span><span class="dot">✦</span>
+    <span>Livraison soignée</span><span class="dot">✦</span>
+    <span>Distillation artisanale</span><span class="dot">✦</span>
+    <span>Récolte artisanale</span><span class="dot">✦</span>
+    <span>100% Naturel</span><span class="dot">✦</span>
+    <span>Certifié Bio</span><span class="dot">✦</span>
+    <span>Terroir Français</span><span class="dot">✦</span>
+    <span>Sans additifs</span><span class="dot">✦</span>
+    <span>Traditions ancestrales</span><span class="dot">✦</span>
+    <span>Livraison soignée</span><span class="dot">✦</span>
+    <span>Distillation artisanale</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-visual">
+    <div class="story-bg-text">Terroir</div>
+    <div class="story-grid">
+      <div class="story-cell story-cell-1" data-label="Cueillette">🌿</div>
+      <div class="story-cell story-cell-2" data-label="Distillation">⚗️</div>
+      <div class="story-cell story-cell-3" data-label="Macération">🍃</div>
+      <div class="story-cell story-cell-4" data-label="Conditionnement">🌱</div>
+    </div>
+  </div>
+  <div class="story-content reveal">
+    <div class="section-tag">Notre histoire</div>
+    <h2>Du sol à<br>votre <em>rituel</em></h2>
+    <p>Née d'une passion pour les savoirs botaniques transmis de génération en génération, Élixir du Terroir célèbre la richesse des plantes médicinales françaises.</p>
+    <p>Chaque élixir est une promesse : celle que la nature, respectée et chérie, offre ses meilleurs secrets à ceux qui savent l'écouter.</p>
+    <blockquote>
+      "La terre ne ment pas. Nos élixirs sont l'expression directe de ce qu'elle nous donne avec générosité."
+    </blockquote>
+    <a href="#produits" class="btn-primary" style="align-self:flex-start; margin-top:.8rem;"><span>Voir la collection</span></a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon">🌿</span> 100% Plantes certifiées bio</div>
+  <div class="trust-item"><span class="trust-icon">🏺</span> Distillation artisanale</div>
+  <div class="trust-item"><span class="trust-icon">🚚</span> Livraison offerte dès 59€</div>
+  <div class="trust-item"><span class="trust-icon">🔄</span> Satisfait ou remboursé 30j</div>
+  <div class="trust-item"><span class="trust-icon">🇫🇷</span> Fabriqué en France</div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="produits">
+  <div class="products-header reveal">
+    <div>
+      <div class="section-tag">La collection</div>
+      <h2>Nos <em>élixirs</em><br>du moment</h2>
+    </div>
+    <div class="products-note">Édition limitée — Automne 2024</div>
+  </div>
+  <div class="products-grid">
+    <!-- Featured -->
+    <div class="product-card featured reveal">
+      <div class="card-visual" style="background: linear-gradient(160deg, #2C1A0E, #3D5A3E, #6B8C6B);">
+        <div class="card-badge">⭐ Bestseller</div>
+        <span style="font-size:8rem; filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))">🌿</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Élixir signature</div>
+        <div class="card-name">Le Vert des Alpages</div>
+        <div class="card-stars">★★★★★ <span class="card-reviews">(234 avis)</span></div>
+        <div class="card-desc">Notre élixir phare, né des herbes sauvages des hauts plateaux alpins. Équilibre, clarté mentale et vitalité profonde.</div>
+        <div class="card-footer">
+          <div class="card-price"><span class="currency">€</span>38</div>
+          <button class="card-add" title="Ajouter au panier">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" style="transition-delay:.1s">
+      <div class="card-visual" style="background: linear-gradient(135deg, #4A2E1A, #B8860B);">
+        <span style="font-size:5rem">🌸</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Élixir floral</div>
+        <div class="card-name">Rose Sauvage de Provence</div>
+        <div class="card-stars">★★★★★ <span class="card-reviews">(189 avis)</span></div>
+        <div class="card-desc">Douceur, apaisement et retrouver soi. Les roses sauvages de Haute-Provence en toute leur splendeur.</div>
+        <div class="card-footer">
+          <div class="card-price"><span class="currency">€</span>42</div>
+          <button class="card-add">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" style="transition-delay:.2s">
+      <div class="card-visual" style="background: linear-gradient(135deg, #1E3A2F, #2D5A45);">
+        <div class="card-badge" style="background:var(--moss);color:white">🌱 Nouveau</div>
+        <span style="font-size:5rem">🍃</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Élixir detox</div>
+        <div class="card-name">Forêt Profonde</div>
+        <div class="card-stars">★★★★☆ <span class="card-reviews">(97 avis)</span></div>
+        <div class="card-desc">Purification et renouveau. Une symphonie de sapins, mousse et champignons médicinaux des Vosges.</div>
+        <div class="card-footer">
+          <div class="card-price"><span class="currency">€</span>35</div>
+          <button class="card-add">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" style="transition-delay:.3s">
+      <div class="card-visual" style="background: linear-gradient(135deg, #5C3A1E, #8B6914);">
+        <span style="font-size:5rem">🌾</span>
+      </div>
+      <div class="card-body">
+        <div class="card-category">Élixir énergisant</div>
+        <div class="card-name">Or du Midi</div>
+        <div class="card-stars">★★★★★ <span class="card-reviews">(156 avis)</span></div>
+        <div class="card-desc">L'énergie solaire du Sud. Romarin, lavande et immortelle pour une vitalité solaire toute la journée.</div>
+        <div class="card-footer">
+          <div class="card-price"><span class="currency">€</span>36</div>
+          <button class="card-add">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="bienfaits">
+  <div class="benefits-left reveal">
+    <div class="section-tag" style="color:var(--straw)">Pourquoi nous choisir</div>
+    <h2>Des élixirs qui<br>font <em>vraiment</em><br>la différence</h2>
+    <p>Chaque plante est choisie, cueillie et transformée avec une intention claire : vous apporter le meilleur de ce que la nature a à offrir, sans compromis.</p>
+    <div class="benefit-list">
+      <div class="benefit-item">
+        <div class="benefit-icon">🌿</div>
+        <div class="benefit-text">
+          <h4>Traçabilité totale</h4>
+          <p>Nous connaissons le nom de chaque producteur. Du champ à votre flacon, rien ne nous échappe.</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">⚗️</div>
+        <div class="benefit-text">
+          <h4>Extraction à froid</h4>
+          <p>Nos méthodes préservent l'intégralité des principes actifs pour une efficacité maximale.</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🧪</div>
+        <div class="benefit-text">
+          <h4>Certifié & analysé</h4>
+          <p>Chaque lot est analysé en laboratoire indépendant. Votre santé mérite cette rigueur.</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📦</div>
+        <div class="benefit-text">
+          <h4>Packaging éco-conçu</h4>
+          <p>Verre recyclé, encres naturelles, zéro plastique. La nature nous donne, nous lui rendons.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits-right reveal">
+    <div class="benefit-visual-main">
+      <div class="benefit-emoji-big">🌱</div>
+      <div class="benefit-badge-row">
+        <span class="b-badge">Bio</span>
+        <span class="b-badge">Vegan</span>
+        <span class="b-badge">Local</span>
+      </div>
+      <div class="benefit-badge-row">
+        <span class="b-badge">Sans OGM</span>
+        <span class="b-badge">Artisanal</span>
+      </div>
+    </div>
+    <div class="float-card float-card-1">
+      <strong>+94%</strong>
+      se sentent mieux<br>en 2 semaines
+    </div>
+    <div class="float-card float-card-2">
+      <strong>4.9 / 5</strong>
+      Note moyenne<br>sur 1 200+ avis
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="avis">
+  <div class="testimonials-header reveal">
+    <div class="section-tag" style="justify-content:center; margin-left:auto; margin-right:auto">Ce qu'ils disent</div>
+    <h2>La communauté<br><em>Élixir du Terroir</em></h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">«&nbsp;Jamais je n'aurais pensé qu'un élixir puisse changer autant mon quotidien. J'ai retrouvé une clarté mentale que je n'avais plus depuis des années.&nbsp;»</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🌸</div>
+        <div>
+          <div class="testi-name">Marie-Claire D.</div>
+          <div class="testi-loc">Lyon · Cliente depuis 8 mois</div>
+        </div>
+        <div class="testi-tiktok">📱 TikTok</div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:.1s">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">«&nbsp;Le Vert des Alpages est devenu mon compagnon matinal. La différence avec les produits du commerce est saisissante — on sent vraiment la plante.&nbsp;»</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🌿</div>
+        <div>
+          <div class="testi-name">Thomas R.</div>
+          <div class="testi-loc">Grenoble · Cliente depuis 14 mois</div>
+        </div>
+        <div class="testi-tiktok">📱 TikTok</div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:.2s">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">«&nbsp;J'ai découvert la marque sur TikTok et commandé sans hésiter. Le packaging est magnifique, l'odeur envoûtante. Un vrai rituel que j'attends chaque matin.&nbsp;»</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🌾</div>
+        <div>
+          <div class="testi-name">Sophie M.</div>
+          <div class="testi-loc">Bordeaux · Cliente depuis 5 mois</div>
+        </div>
+        <div class="testi-tiktok">📱 TikTok</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="commander">
+  <div class="cta-inner">
+    <div class="cta-tag">✦ Offre de bienvenue ✦</div>
+    <h2>Commencez votre<br><em>rituel naturel</em></h2>
+    <p>Rejoignez la communauté Élixir du Terroir et recevez -15% sur votre première commande + un guide botanique offert.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="email" placeholder="Votre adresse email…">
+      <button class="cta-btn">Recevoir mon offre</button>
+    </div>
+    <p class="cta-fine">Pas de spam · Désabonnement en un clic · 100% confidentiel</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#" class="nav-logo">Élixir <span style="color:var(--sage)">du Terroir</span></a>
+    <p>Des élixirs botaniques nés du respect de la terre, pour ceux qui cherchent à reconnecter leur corps et leur âme à la nature.</p>
+    <div class="footer-social">
+      <a class="social-btn" href="#" title="TikTok">📱</a>
+      <a class="social-btn" href="#" title="Instagram">📸</a>
+      <a class="social-btn" href="#" title="Facebook">💙</a>
+      <a class="social-btn" href="#" title="YouTube">▶️</a>
+    </div>
+  </div>
+  <div class="footer-col">
+    <h4>Boutique</h4>
+    <ul>
+      <li><a href="#">Élixirs floraux</a></li>
+      <li><a href="#">Élixirs énergisants</a></li>
+      <li><a href="#">Coffrets cadeaux</a></li>
+      <li><a href="#">Éditions limitées</a></li>
+      <li><a href="#">Abonnement mensuel</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>La marque</h4>
+    <ul>
+      <li><a href="#">Notre histoire</a></li>
+      <li><a href="#">Nos producteurs</a></li>
+      <li><a href="#">Engagements</a></li>
+      <li><a href="#">Blog botanique</a></li>
+      <li><a href="#">Presse</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Aide</h4>
+    <ul>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Livraison & retours</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Mentions légales</a></li>
+      <li><a href="#">CGV</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Élixir du Terroir · Tous droits réservés · Made with 🌿 in France</p>
+    <p style="color:rgba(212,201,181,.25)">Conçu pour convertir, pas pour décorer.</p>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animate() {
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animate);
+  })();
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // CTA button interaction
+  document.querySelector('.cta-btn').addEventListener('click', function() {
+    const input = document.querySelector('.cta-input');
+    if (!input.value) {
+      input.style.borderLeft = '2px solid #E74C3C';
+      input.placeholder = 'Entrez votre email…';
+      setTimeout(() => { input.style.borderLeft = ''; }, 2000);
+    } else {
+      this.textContent = '✓ C\'est noté !';
+      this.style.background = '#3D5A3E';
+      this.style.color = 'white';
+      setTimeout(() => {
+        this.textContent = 'Recevoir mon offre';
+        this.style.background = ''; this.style.color = '';
+        input.value = '';
+      }, 3000);
+    }
+  });
+
+  // Card add buttons
+  document.querySelectorAll('.card-add').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const original = this.textContent;
+      this.textContent = '✓';
+      this.style.background = 'var(--gold)';
+      setTimeout(() => {
+        this.textContent = original;
+        this.style.background = '';
+      }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
