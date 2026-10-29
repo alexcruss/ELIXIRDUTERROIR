@@ -8,7 +8,7 @@ const SITE = {
   /* Photos : déposer le fichier dans img/ puis indiquer son chemin, ex. 'img/fondatrice.jpg'.
      Tant que c'est null, le site affiche l'illustration. */
   photos: {
-    accueil: null,   // format portrait 4:5, la fondatrice avec ses produits
+    accueil: 'img/fondatrice.jpg',   // photo de profil TikTok (1080 × 1080), à remplacer par l'original
     portrait: null,  // format portrait 4:5, pour « Derrière la marque »
   },
 };
@@ -32,9 +32,9 @@ const PRODUITS = [
   },
   {
     nom: 'Mélange Spécial',
-    format: 'Écorces et racines',
+    format: 'Écorces et racines, avec alcool',
     categorie: 'Préparation maison',
-    texte: "Un mélange d'écorces et de racines séchées, composé à la boutique.",
+    texte: "Un mélange d'écorces et de racines, fabriqué à Lomé. Mode d'emploi indiqué sur l'étiquette : deux petits verres, matin et soir.",
     prix: null,
     visuel: { type: 'ecorces', etiquette: '#F4EEE4', texteEtiquette: '#8C2333', bouchon: '#D9602B', lignes: ['Mélange', 'Spécial'] },
   },

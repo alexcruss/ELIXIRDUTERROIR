@@ -167,13 +167,14 @@ section { padding: 72px 0; }
 .arch-illu svg { height: 82%; width: auto; filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .35)); }
 .arch-illu svg:nth-child(2) { height: 100%; }
 .arch.has-photo .arch-illu, .arch.has-photo .arch-leaves { display: none; }
+/* La photo est carrée et les bouteilles touchent les bords : cadre arrondi plutôt qu'en arche. */
+.arch.has-photo { aspect-ratio: 1; width: min(100%, 520px); border-radius: 28px; }
 .arch-caption {
   position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%);
   white-space: nowrap; background: var(--blanc); color: var(--terre);
   font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
   padding: 8px 20px; border-radius: 999px; box-shadow: 0 10px 30px -12px rgba(46, 29, 18, .4);
 }
-.arch.has-photo + .arch-caption { display: none; }
 
 @media (min-width: 900px) {
   .hero { padding: 64px 0 100px; }
