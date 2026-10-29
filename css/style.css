@@ -91,16 +91,9 @@ section { padding: 72px 0; }
   border-bottom: 1px solid rgba(46, 29, 18, .08);
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.logo-mark { width: 40px; height: 40px; flex: none; }
-.logo-text {
-  font-family: var(--titres); font-size: 1.12rem; font-weight: 700; line-height: 1; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--vert);
-}
-.logo-text small {
-  display: block; margin-top: 3px;
-  font-family: var(--sans); font-size: .58rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--bois);
-}
+.logo { display: flex; align-items: center; text-decoration: none; }
+.logo img { height: 44px; width: auto; }
+@media (min-width: 980px) { .logo img { height: 48px; } }
 
 .nav-toggle {
   display: grid; gap: 5px; place-content: center; width: 44px; height: 44px;
@@ -405,8 +398,7 @@ section { padding: 72px 0; }
 /* ── Pied de page ────────────────────────────────────────── */
 .site-footer { background: var(--vert); color: var(--vert-clair); padding: 56px 0 104px; }
 .footer-grid { display: grid; gap: 32px; }
-.logo-clair .logo-text { color: var(--creme); }
-.logo-clair .logo-text small { color: var(--feuille); }
+.logo-clair img { height: 64px; }
 .footer-slogan { margin-top: 12px; font-family: var(--titres); font-size: 1rem; font-weight: 600; color: var(--creme); }
 .site-footer nav, .footer-contact { display: grid; gap: 10px; align-content: start; }
 .site-footer a { text-decoration: none; }

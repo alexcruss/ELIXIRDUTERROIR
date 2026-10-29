@@ -35,7 +35,7 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 - [ ] Prix des produits, et nom du flacon à étiquette verte (« VIR…S », sans alcool), illisible sur la photo
 - [ ] Orthographe voulue : le site reprend l'étiquette, « Mélange Spéciale » (ou « Spécial » ?)
 - [ ] Moyens de paiement et zones de livraison
-- [ ] Logo en haute définition (SVG ou PNG transparent)
+- [ ] Logo en haute définition (SVG ou PNG transparent) : le site utilise pour l'instant le logo détouré d'un visuel TikTok (`img/logo-vert.png` pour fond clair, `img/logo-blanc.png` pour fond foncé, `img/favicon.png`)
 - [ ] Photos : l'original de la photo d'accueil (pour l'instant la photo de profil TikTok, signée « RFE »), un portrait, chaque produit
 - [ ] Noms locaux (éwé, mina) des plantes des fiches
 - [ ] Agrément de tradipraticienne éventuel, à afficher
