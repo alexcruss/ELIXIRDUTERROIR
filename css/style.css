@@ -1,4 +1,4 @@
-/* Élixir du Terroir — couleurs reprises de la tenue (vert sapin), des étiquettes (bordeaux) et du bois. */
+/* Élixir du Terroir — vert sapin (la tenue) et rouge bordeaux (les visuels « Astuce du jour » et les étiquettes), avec le bois en fond. */
 :root {
   --vert: #1F4A43;
   --vert-2: #2C6357;
@@ -11,7 +11,9 @@
   --creme: #F4ECDD;
   --sable: #EADDC6;
   --blanc: #FDFAF4;
-  --bordeaux: #8C2333;
+  --bordeaux: #8E1B2B;
+  --bordeaux-fonce: #5A0E19;
+  --bordeaux-clair: #F6E3E6;
   --wa: #1D9B50;
   --wa-fonce: #167D40;
 
@@ -90,6 +92,11 @@ section { padding: 72px 0; }
   background: rgba(253, 250, 244, .94); backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(46, 29, 18, .08);
 }
+/* Liseré vert et bordeaux en haut de page */
+.site-header::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px;
+  background: linear-gradient(90deg, var(--vert) 0 50%, var(--bordeaux) 50% 100%);
+}
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
 .logo { display: flex; align-items: center; text-decoration: none; }
 .logo img { height: 44px; width: auto; }
@@ -129,12 +136,12 @@ section { padding: 72px 0; }
 .hero {
   padding: 36px 0 64px;
   background:
-    radial-gradient(60% 50% at 85% 10%, rgba(127, 163, 107, .18), transparent 70%),
-    radial-gradient(50% 50% at 0% 100%, rgba(122, 78, 45, .10), transparent 70%),
+    radial-gradient(60% 50% at 85% 10%, rgba(127, 163, 107, .20), transparent 70%),
+    radial-gradient(50% 50% at 0% 100%, rgba(142, 27, 43, .10), transparent 70%),
     var(--blanc);
 }
 .hero-grid { display: grid; gap: 44px; align-items: center; }
-.hero h1 { font-size: clamp(2.15rem, 8vw, 3.6rem); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 18px; }
+.hero h1 { font-size: clamp(2.15rem, 8vw, 3.6rem); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 18px; color: var(--bordeaux); }
 .hero h1 em { display: block; font-style: normal; font-weight: 600; color: var(--vert); }
 .hero-sub { max-width: 520px; font-size: 1.05rem; color: var(--doux); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
@@ -177,13 +184,13 @@ section { padding: 72px 0; }
 }
 
 /* ── Bandeau ─────────────────────────────────────────────── */
-.strip { background: var(--vert); color: var(--creme); }
+.strip { background: var(--bordeaux); color: var(--creme); }
 .strip ul {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; list-style: none;
   padding: 16px 0; font-size: .76rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
 }
 .strip li { display: flex; align-items: center; gap: 10px; }
-.strip li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--feuille); }
+.strip li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #9CC488; }
 
 /* ── Étapes ──────────────────────────────────────────────── */
 .steps { display: grid; gap: 16px; list-style: none; counter-reset: etape; }
@@ -193,6 +200,7 @@ section { padding: 72px 0; }
   display: block; margin-bottom: 14px;
   font-family: var(--titres); font-size: 2rem; font-weight: 700; line-height: 1; color: var(--bordeaux);
 }
+.step:nth-child(2)::before { color: var(--vert); }
 .step h3 { margin-bottom: 8px; }
 .step p { color: var(--doux); }
 @media (min-width: 800px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
@@ -222,35 +230,29 @@ section { padding: 72px 0; }
   font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
   color: var(--vert); background: var(--vert-clair);
 }
-.chip[data-cat="Bien-être intime"] { color: var(--bordeaux); background: #F3DDE0; }
+.chip[data-cat="Bien-être intime"], .chip[data-cat="Préparation maison"] { color: var(--bordeaux); background: var(--bordeaux-clair); }
 .product h3 { font-size: 1.15rem; }
 .format { font-size: .86rem; color: var(--bois); margin-top: -4px; }
 .product p { font-size: .95rem; color: var(--doux); }
 .product-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 12px; }
 .price { font-family: var(--titres); font-size: 1rem; font-weight: 600; color: var(--terre); }
 
-.detail {
-  display: grid; grid-template-columns: 48px 1fr; gap: 14px 18px; align-items: center; margin-top: 28px;
-  padding: 22px; border: 1.5px solid rgba(31, 74, 67, .2); border-radius: var(--rayon); background: var(--blanc);
+/* Deux bandeaux côte à côte : vert (plantes) et bordeaux (bien-être intime) */
+.bandeaux { display: grid; gap: 16px; margin-top: 28px; }
+@media (min-width: 900px) { .bandeaux { grid-template-columns: 1fr 1fr; gap: 20px; } }
+.bandeau {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  padding: 28px 26px; border-radius: var(--rayon); color: rgba(253, 250, 244, .85);
 }
-.detail-ico { width: 48px; height: 48px; }
-.detail h3 { font-size: 1.1rem; margin-bottom: 2px; }
-.detail p { font-size: .93rem; color: var(--doux); }
-.detail .btn { grid-column: 1 / -1; justify-self: start; }
-@media (min-width: 820px) {
-  .detail { grid-template-columns: 48px 1fr auto; padding: 24px 32px; }
-  .detail .btn { grid-column: auto; }
-}
-
-.intime {
-  display: grid; gap: 20px; align-items: center; margin-top: 28px;
-  padding: 30px 26px; border-radius: var(--rayon);
-  background: linear-gradient(135deg, var(--vert) 0%, #183A34 100%); color: var(--vert-clair);
-}
-.intime .eyebrow { color: var(--feuille); }
-.intime h3 { font-size: clamp(1.3rem, 3.4vw, 1.75rem); color: #fff; margin-bottom: 8px; }
-.intime .btn { justify-self: start; }
-@media (min-width: 820px) { .intime { grid-template-columns: 1fr auto; padding: 40px 44px; } }
+.bandeau h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); color: #fff; }
+.bandeau p:not(.eyebrow) { font-size: .95rem; margin-bottom: 12px; }
+.bandeau .eyebrow { margin-bottom: 0; }
+.bandeau .btn { margin-top: auto; }
+.bandeau-vert { background: linear-gradient(140deg, var(--vert-2) 0%, var(--vert) 100%); }
+.bandeau-vert .eyebrow { color: #B9D3A8; }
+.bandeau-bordeaux { background: linear-gradient(140deg, var(--bordeaux) 0%, var(--bordeaux-fonce) 100%); }
+.bandeau-bordeaux .eyebrow { color: #F2C2C9; }
+@media (min-width: 900px) { .bandeau { padding: 34px 36px; } }
 
 /* ── Plantes ─────────────────────────────────────────────── */
 .avertissement {
@@ -268,7 +270,7 @@ section { padding: 72px 0; }
   font-size: .9rem; font-weight: 500; color: var(--vert);
   background: transparent; border: 1.5px solid rgba(31, 74, 67, .28);
 }
-.filter[aria-pressed="true"] { background: var(--vert); border-color: var(--vert); color: #fff; }
+.filter[aria-pressed="true"] { background: var(--bordeaux); border-color: var(--bordeaux); color: #fff; }
 .filter span { opacity: .7; margin-left: 4px; }
 @media (min-width: 900px) { .filters { flex-wrap: wrap; overflow: visible; margin: 0 0 28px; padding: 0; } }
 
@@ -294,7 +296,7 @@ section { padding: 72px 0; }
 .thumb-play {
   position: absolute; right: 12px; bottom: 12px; z-index: 1;
   display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%;
-  background: rgba(253, 250, 244, .94); color: var(--vert); box-shadow: 0 8px 20px -6px rgba(0, 0, 0, .5);
+  background: rgba(253, 250, 244, .94); color: var(--bordeaux); box-shadow: 0 8px 20px -6px rgba(0, 0, 0, .5);
   transition: transform .2s;
 }
 .thumb-play svg { width: 22px; height: 22px; margin-left: 3px; }
@@ -314,9 +316,9 @@ section { padding: 72px 0; }
 .plant-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: auto; padding-top: 8px; }
 
 /* ── À la source ─────────────────────────────────────────── */
-.source { background: var(--terre); color: var(--sable); }
+.source { background: linear-gradient(165deg, #74142A 0%, var(--bordeaux-fonce) 60%, #3E0911 100%); color: var(--sable); }
 .source h2 { color: var(--creme); }
-.source .eyebrow { color: var(--feuille); }
+.source .eyebrow { color: #9CC488; }
 .source .section-head p:not(.eyebrow) { color: rgba(234, 221, 198, .8); }
 .episodes {
   display: grid; grid-auto-flow: column; grid-auto-columns: min(80%, 300px); gap: 16px;
@@ -328,7 +330,7 @@ section { padding: 72px 0; }
   border: 1px solid rgba(234, 221, 198, .14); border-radius: var(--rayon); background: rgba(255, 255, 255, .04);
 }
 .episode .thumb { aspect-ratio: 4 / 5; margin-bottom: 6px; }
-.episode .num { font-family: var(--titres); font-size: 1.9rem; font-weight: 700; line-height: 1; color: var(--feuille); }
+.episode .num { font-family: var(--titres); font-size: 1.9rem; font-weight: 700; line-height: 1; color: #9CC488; }
 .episode .date { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(234, 221, 198, .6); }
 .episode h3 { font-size: 1.08rem; color: var(--creme); }
 .episode p { font-size: .93rem; color: rgba(234, 221, 198, .82); }
@@ -371,6 +373,7 @@ section { padding: 72px 0; }
 .infos a { color: var(--vert); font-weight: 500; }
 .ico { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: var(--vert-clair); color: var(--vert); }
 .ico svg { width: 22px; height: 22px; }
+.infos li:nth-child(even) .ico { background: var(--bordeaux-clair); color: var(--bordeaux); }
 .map-ph {
   display: grid; place-items: center; min-height: 300px; padding: 32px; text-align: center;
   border: 1.5px dashed rgba(46, 29, 18, .22); border-radius: var(--rayon);
@@ -391,12 +394,13 @@ section { padding: 72px 0; }
   padding: 18px 20px; cursor: pointer; list-style: none; font-weight: 500; color: var(--terre);
 }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: '+'; flex: none; font-size: 1.5rem; line-height: 1; color: var(--vert); transition: transform .2s; }
+.faq summary::after { content: '+'; flex: none; font-size: 1.5rem; line-height: 1; color: var(--bordeaux); transition: transform .2s; }
+.faq details[open] { border-color: rgba(142, 27, 43, .3); }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq details p { padding: 0 20px 20px; color: var(--doux); }
 
 /* ── Pied de page ────────────────────────────────────────── */
-.site-footer { background: var(--vert); color: var(--vert-clair); padding: 56px 0 104px; }
+.site-footer { background: var(--vert); color: var(--vert-clair); padding: 56px 0 104px; border-top: 6px solid var(--bordeaux); }
 .footer-grid { display: grid; gap: 32px; }
 .logo-clair img { height: 64px; }
 .footer-slogan { margin-top: 12px; font-family: var(--titres); font-size: 1rem; font-weight: 600; color: var(--creme); }
