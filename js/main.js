@@ -136,6 +136,13 @@ document.getElementById('episodes-liste').innerHTML = EPISODES.map((ep, i) => `
     <button class="btn btn-clair btn-sm" type="button" data-video="${ep.id}" data-titre="${echapper(ep.titre)}">${ICONE('i-play')}Regarder</button>
   </article>`).join('');
 
+/* ── Sur nos réseaux : visuels Facebook et Instagram, reliés à leur publication ── */
+document.getElementById('reseaux-liste').innerHTML = RESEAUX.map((r) => `
+  <a class="post" href="${r.lien}" target="_blank" rel="noopener" aria-label="Voir la publication sur ${r.reseau}">
+    <img src="${r.image}" alt="${echapper(r.alt)}" loading="lazy" decoding="async">
+    <span class="post-reseau">${ICONE(r.reseau === 'Instagram' ? 'i-ig' : 'i-fb')}${r.reseau}</span>
+  </a>`).join('');
+
 /* ── Liens WhatsApp avec message prérempli ── */
 document.querySelectorAll('[data-wa]').forEach((a) => { a.href = waLien(a.dataset.wa); });
 

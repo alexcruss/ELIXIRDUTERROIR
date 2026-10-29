@@ -5,6 +5,8 @@ const SITE = {
   whatsapp: '22896376439',
   whatsappAffiche: '+228 96 37 64 39',
   tiktok: 'https://www.tiktok.com/@_elizir',
+  facebook: 'https://www.facebook.com/people/Elixir-du-Terroir/61583865537441/',
+  instagram: 'https://www.instagram.com/elixirduterroir/',
   /* Photos : déposer le fichier dans img/ puis indiquer son chemin, ex. 'img/fondatrice.jpg'.
      Tant que c'est null, le site affiche l'illustration. */
   photos: {
@@ -13,15 +15,16 @@ const SITE = {
   },
 };
 
-/* « image » : photo du produit (découpée dans la photo de profil TikTok, à remplacer par de vraies photos).
+/* « image » : photo du produit, découpée dans les visuels Facebook et TikTok de la marque (à remplacer par de vraies photos produit).
+   Les descriptions reprennent les étiquettes et les publications de la marque.
    Sans image, le site dessine une bouteille à partir de « visuel ».
    « nomAConfirmer » : true ajoute la mention « nom à confirmer ». */
 const PRODUITS = [
   {
     nom: 'Le Fruit Désir',
     format: 'Bouteille, prête à boire',
-    categorie: 'Bien-être intime',
-    texte: "Notre préparation signature en bouteille. La composition, le dosage et la durée de la cure vous sont expliqués sur WhatsApp.",
+    categorie: 'Fertilité féminine',
+    texte: "D'après son étiquette, une préparation de plantes pour accompagner la fertilité féminine et favoriser la conception. Dosage et durée de la cure expliqués sur WhatsApp.",
     prix: null,
     image: 'img/produits/fruit-desir.jpg',
     visuel: { type: 'liquide', liquide: '#6E1A26', etiquette: '#8C2333', bouchon: '#6FA35A', lignes: ['Le Fruit', 'Désir'] },
@@ -29,31 +32,55 @@ const PRODUITS = [
   {
     nom: 'Le Fruit Désir, écorces',
     format: 'Écorces à préparer',
-    categorie: 'Bien-être intime',
+    categorie: 'Fertilité féminine',
     texte: "La même recette en écorces séchées, à préparer chez vous en suivant nos indications.",
     prix: null,
     image: 'img/produits/fruit-desir-ecorces.jpg',
     visuel: { type: 'ecorces', etiquette: '#8C2333', bouchon: '#6FA35A', lignes: ['Le Fruit', 'Désir'] },
   },
   {
-    nom: 'Mélange Spéciale',
-    format: 'Écorces et racines, avec alcool',
-    categorie: 'Préparation maison',
-    texte: "Un mélange d'écorces et de racines, fabriqué à Lomé. Mode d'emploi indiqué sur l'étiquette : deux petits verres, matin et soir.",
+    nom: 'VIRILIS',
+    format: 'Bouteille, sans alcool',
+    categorie: 'Bien-être intime',
+    texte: "Un aphrodisiaque sans alcool, à base de plantes et de racines, pour raviver la complicité et les moments à deux.",
     prix: null,
-    image: 'img/produits/melange-speciale.jpg',
-    visuel: { type: 'ecorces', etiquette: '#F4EEE4', texteEtiquette: '#8C2333', bouchon: '#D9602B', lignes: ['Mélange', 'Spéciale'] },
+    image: 'img/produits/virilis.jpg',
+    visuel: { type: 'liquide', liquide: '#7A4A2A', etiquette: '#4C7A3C', bouchon: '#6FA35A', lignes: ['VIRILIS'] },
   },
   {
-    nom: 'Le flacon vert',
-    nomAConfirmer: true,
-    format: 'Sans alcool, plantes et racines',
+    nom: 'Mélange Spécial',
+    format: 'Écorces et racines, avec alcool',
     categorie: 'Préparation maison',
-    texte: "Une préparation sans alcool, à base de plantes et de racines. Son nom figure sur l'étiquette verte (« VIR…S »).",
+    texte: "Une sélection de plantes au cœur de notre savoir-faire, fabriquée à Lomé. Mode d'emploi indiqué sur l'étiquette : deux petits verres, matin et soir.",
     prix: null,
-    image: 'img/produits/flacon-vert.jpg',
-    visuel: { type: 'liquide', liquide: '#7A4A2A', etiquette: '#4C7A3C', bouchon: '#6FA35A', lignes: ['Plantes', 'et racines'] },
+    image: 'img/produits/melange-special.jpg',
+    visuel: { type: 'ecorces', etiquette: '#F4EEE4', texteEtiquette: '#8C2333', bouchon: '#D9602B', lignes: ['Mélange', 'Spécial'] },
   },
+  {
+    nom: 'Antibiox',
+    format: 'Poudre de plantes, en pot',
+    categorie: 'Confort urinaire',
+    texte: "Certaines plantes sont traditionnellement utilisées pour accompagner le confort urinaire. « Prenez soin de vous, simplement. »",
+    prix: null,
+    image: 'img/produits/antibiox.jpg',
+    visuel: { type: 'feuilles', etiquette: '#8C2333', bouchon: '#2F8F3A', lignes: ['Antibiox'] },
+  },
+];
+
+/* Visuels publiés sur Facebook et Instagram (dossier img/reseaux), chacun relié à sa publication. */
+const RESEAUX = [
+  { image: 'img/reseaux/p2.jpg', lien: 'https://www.instagram.com/elixirduterroir/p/DeXd5halJWM/', reseau: 'Instagram',
+    alt: "Visuel « La nature a ses secrets, nous savons les valoriser » avec les bouteilles Le Fruit Désir et VIRILIS" },
+  { image: 'img/reseaux/p1.jpg', lien: 'https://www.instagram.com/elixirduterroir/p/DeY-DoXAYpj/', reseau: 'Instagram',
+    alt: "Visuel « Ravivez la flamme » présentant VIRILIS, formule sans alcool" },
+  { image: 'img/reseaux/p3.jpg', lien: 'https://www.instagram.com/elixirduterroir/p/DeU5Gn8gazZ/', reseau: 'Instagram',
+    alt: "Visuel « Un mélange, un savoir-faire » présentant le Mélange Spécial" },
+  { image: 'img/reseaux/p7.jpg', lien: 'https://www.facebook.com/photo/?fbid=122141046753128851', reseau: 'Facebook',
+    alt: "Visuel présentant le pot Antibiox entre deux feuilles" },
+  { image: 'img/reseaux/p9.jpg', lien: 'https://www.facebook.com/photo/?fbid=122140950429128851', reseau: 'Facebook',
+    alt: "Visuel « Des solutions naturelles existent, passez chez Élixir du Terroir pour des conseils adaptés »" },
+  { image: 'img/reseaux/p4.jpg', lien: 'https://www.facebook.com/photo/?fbid=122147658921128851', reseau: 'Facebook',
+    alt: "Visuel « Bienvenue octobre ! Prendre soin de soi, c'est aussi apprendre à écouter la nature »" },
 ];
 
 /* Une fiche par vidéo. id = identifiant de la vidéo TikTok (fin de l'URL).
