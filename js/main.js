@@ -32,7 +32,7 @@ function bouteille({ type = 'liquide', liquide = '#6E1A26', etiquette = '#8C2333
     ? `<rect x="0" y="92" width="120" height="210" fill="${liquide}"/><rect x="0" y="92" width="120" height="5" fill="#fff" opacity=".2"/>`
     : `<rect x="0" y="70" width="120" height="230" fill="${type === 'feuilles' ? '#2F5228' : '#3E2616'}" opacity=".55"/>${morceaux(type, compteurSvg)}`;
   const texte = lignes.map((l, i) =>
-    `<text x="60" y="${190 + i * 19}" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="17" font-weight="700" fill="${texteEtiquette}">${echapper(l)}</text>`).join('');
+    `<text x="60" y="${190 + i * 17}" text-anchor="middle" font-family="Montserrat, 'Century Gothic', Arial, sans-serif" font-size="12" font-weight="700" fill="${texteEtiquette}">${echapper(l)}</text>`).join('');
   return `<svg viewBox="0 0 120 300" aria-hidden="true">
     <defs><clipPath id="${id}"><path d="${forme}"/></clipPath></defs>
     <ellipse cx="60" cy="293" rx="46" ry="5" fill="#000" opacity=".18"/>
@@ -42,7 +42,7 @@ function bouteille({ type = 'liquide', liquide = '#6E1A26', etiquette = '#8C2333
     <path d="${forme}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
     <rect x="21" y="150" width="78" height="80" rx="3" fill="${etiquette}"/>
     <rect x="25" y="154" width="70" height="72" rx="2" fill="none" stroke="${texteEtiquette}" stroke-opacity=".45"/>
-    <text x="60" y="169" text-anchor="middle" font-family="Jost, sans-serif" font-size="5.6" letter-spacing=".9" fill="${texteEtiquette}" opacity=".85">ÉLIXIR DU TERROIR</text>
+    <text x="60" y="169" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="5.2" letter-spacing=".9" fill="${texteEtiquette}" opacity=".85">ÉLIXIR DU TERROIR</text>
     ${texte}
     <rect x="27" y="104" width="6" height="150" rx="3" fill="#fff" opacity=".22"/>
   </svg>`;
@@ -66,13 +66,23 @@ document.getElementById('hero-bouteilles').innerHTML = [
   bouteille(PRODUITS[1].visuel),
 ].join('');
 
+/* ── Vignette de vidéo : image de couverture TikTok enregistrée dans img/videos/<id>.jpg ── */
+const vignette = (id, titre, vues) => `
+  <button class="thumb" type="button" data-video="${id}" data-titre="${echapper(titre)}" aria-label="Voir la vidéo : ${echapper(titre)}">
+    <img src="img/videos/${id}.jpg" alt="" loading="lazy" decoding="async">
+    <span class="thumb-play">${ICONE('i-play')}</span>
+    ${vues ? `<span class="thumb-vues">${ICONE('i-play')}${formatVues(vues)} vues</span>` : ''}
+  </button>`;
+
 /* ── Produits ── */
 document.getElementById('produits-liste').innerHTML = PRODUITS.map((p) => `
   <article class="product reveal">
-    <div class="product-visual">${bouteille(p.visuel)}</div>
+    <div class="product-visual${p.image ? ' photo' : ''}">${p.image
+      ? `<img src="${p.image}" alt="${echapper(p.nom)}" loading="lazy" decoding="async">`
+      : bouteille(p.visuel)}</div>
     <div class="product-body">
       <span class="chip" data-cat="${echapper(p.categorie)}">${echapper(p.categorie)}</span>
-      <h3>${echapper(p.nom)}</h3>
+      <h3>${echapper(p.nom)}${p.nomAConfirmer ? ' <span class="tbc">nom à confirmer</span>' : ''}</h3>
       <p class="format">${echapper(p.format)}</p>
       <p>${echapper(p.texte)}</p>
       <div class="product-foot">
@@ -86,10 +96,8 @@ document.getElementById('produits-liste').innerHTML = PRODUITS.map((p) => `
 const listePlantes = document.getElementById('plantes-liste');
 listePlantes.innerHTML = PLANTES.map((p) => `
   <article class="plant" data-cat="${echapper(p.cat)}">
-    <div class="plant-top">
-      <span class="chip" data-cat="${echapper(p.cat)}">${echapper(p.cat)}</span>
-      <span class="views">${ICONE('i-play')}${formatVues(p.vues)} vues</span>
-    </div>
+    ${vignette(p.id, p.titre, p.vues)}
+    <span class="chip" data-cat="${echapper(p.cat)}">${echapper(p.cat)}</span>
     <h3>${echapper(p.titre)}</h3>
     ${p.latin ? `<p class="latin">${echapper(p.latin)}</p>` : ''}
     ${p.local ? `<p class="latin">Nom local : ${echapper(p.local)}</p>` : ''}
@@ -120,6 +128,7 @@ filtres.addEventListener('click', (e) => {
 /* ── À la source ── */
 document.getElementById('episodes-liste').innerHTML = EPISODES.map((ep, i) => `
   <article class="episode">
+    ${vignette(ep.id, ep.titre)}
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
     <span class="date">${echapper(ep.date)}</span>
     <h3>${echapper(ep.titre)}</h3>

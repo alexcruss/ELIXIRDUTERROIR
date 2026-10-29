@@ -21,7 +21,7 @@ Presque tout se change dans **`js/data.js`**, sans toucher au reste :
 | Pour… | Modifier |
 |---|---|
 | Ajouter ou changer un produit, un prix | `PRODUITS` (mettre le prix en texte, ex. `'10 000 F'`) |
-| Ajouter une fiche plante | `PLANTES` : l'`id` est la fin de l'URL de la vidéo TikTok |
+| Ajouter une fiche plante | `PLANTES` : l'`id` est la fin de l'URL de la vidéo TikTok ; enregistrer sa miniature dans `img/videos/<id>.jpg` |
 | Ajouter un épisode « À la source » | `EPISODES` |
 | Ajouter les photos | déposer le fichier dans `img/`, puis renseigner `SITE.photos` |
 | Changer le numéro WhatsApp | `SITE.whatsapp` (et les liens `wa.me` de `index.html`) |
@@ -33,7 +33,7 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 - [ ] Prénom et nom de la fondatrice, et quelques lignes sur son parcours
 - [ ] Adresse exacte de la boutique et jours d'ouverture
 - [ ] Prix des produits, et nom du flacon à étiquette verte (« VIR…S », sans alcool), illisible sur la photo
-- [ ] Orthographe voulue : « Mélange Spécial » (site) ou « Mélange Spéciale » (étiquette)
+- [ ] Orthographe voulue : le site reprend l'étiquette, « Mélange Spéciale » (ou « Spécial » ?)
 - [ ] Moyens de paiement et zones de livraison
 - [ ] Logo en haute définition (SVG ou PNG transparent)
 - [ ] Photos : l'original de la photo d'accueil (pour l'instant la photo de profil TikTok, signée « RFE »), un portrait, chaque produit
@@ -44,8 +44,9 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 ## Technique
 
 - HTML, CSS et JavaScript sans dépendance, conçu d'abord pour le téléphone et léger à charger
-- Polices Cormorant Garamond et Jost (Google Fonts)
-- Vidéos : lecteur officiel TikTok, chargé seulement quand on clique
+- Police Montserrat (Google Fonts), proche de Century Gothic ; Century Gothic, Tahoma et Arial en secours
+- Vidéos : miniatures enregistrées dans `img/videos/` (une par vidéo, nommée avec son identifiant TikTok) ; le lecteur officiel TikTok se charge seulement au clic
+- Produits : photos découpées dans la photo de profil TikTok (`img/produits/`), à remplacer par de vraies photos produit
 - Déploiement automatique sur GitHub Pages à chaque push sur `main` (`.github/workflows/static.yml`)
 
 ```
@@ -53,7 +54,7 @@ index.html      la page
 css/style.css   la mise en forme
 js/data.js      le contenu modifiable
 js/main.js      l'affichage, les filtres et la fenêtre vidéo
-img/            les photos à venir
+img/            photo d'accueil, produits/ et videos/ (miniatures)
 ```
 
 ## Réalisation

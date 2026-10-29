@@ -13,6 +13,9 @@ const SITE = {
   },
 };
 
+/* « image » : photo du produit (découpée dans la photo de profil TikTok, à remplacer par de vraies photos).
+   Sans image, le site dessine une bouteille à partir de « visuel ».
+   « nomAConfirmer » : true ajoute la mention « nom à confirmer ». */
 const PRODUITS = [
   {
     nom: 'Le Fruit Désir',
@@ -20,6 +23,7 @@ const PRODUITS = [
     categorie: 'Bien-être intime',
     texte: "Notre préparation signature en bouteille. La composition, le dosage et la durée de la cure vous sont expliqués sur WhatsApp.",
     prix: null,
+    image: 'img/produits/fruit-desir.jpg',
     visuel: { type: 'liquide', liquide: '#6E1A26', etiquette: '#8C2333', bouchon: '#6FA35A', lignes: ['Le Fruit', 'Désir'] },
   },
   {
@@ -28,23 +32,27 @@ const PRODUITS = [
     categorie: 'Bien-être intime',
     texte: "La même recette en écorces séchées, à préparer chez vous en suivant nos indications.",
     prix: null,
+    image: 'img/produits/fruit-desir-ecorces.jpg',
     visuel: { type: 'ecorces', etiquette: '#8C2333', bouchon: '#6FA35A', lignes: ['Le Fruit', 'Désir'] },
   },
   {
-    nom: 'Mélange Spécial',
+    nom: 'Mélange Spéciale',
     format: 'Écorces et racines, avec alcool',
     categorie: 'Préparation maison',
     texte: "Un mélange d'écorces et de racines, fabriqué à Lomé. Mode d'emploi indiqué sur l'étiquette : deux petits verres, matin et soir.",
     prix: null,
-    visuel: { type: 'ecorces', etiquette: '#F4EEE4', texteEtiquette: '#8C2333', bouchon: '#D9602B', lignes: ['Mélange', 'Spécial'] },
+    image: 'img/produits/melange-speciale.jpg',
+    visuel: { type: 'ecorces', etiquette: '#F4EEE4', texteEtiquette: '#8C2333', bouchon: '#D9602B', lignes: ['Mélange', 'Spéciale'] },
   },
   {
-    nom: 'Plantes au détail',
-    format: 'Feuilles, écorces, racines',
-    categorie: 'Selon arrivage',
-    texte: "Les feuilles et écorces montrées dans nos vidéos, selon ce qui est disponible. Demandez avant de vous déplacer.",
+    nom: 'Le flacon vert',
+    nomAConfirmer: true,
+    format: 'Sans alcool, plantes et racines',
+    categorie: 'Préparation maison',
+    texte: "Une préparation sans alcool, à base de plantes et de racines. Son nom figure sur l'étiquette verte (« VIR…S »).",
     prix: null,
-    visuel: { type: 'feuilles', etiquette: '#1F4A43', bouchon: '#6FA35A', lignes: ['Plantes', 'du Togo'] },
+    image: 'img/produits/flacon-vert.jpg',
+    visuel: { type: 'liquide', liquide: '#7A4A2A', etiquette: '#4C7A3C', bouchon: '#6FA35A', lignes: ['Plantes', 'et racines'] },
   },
 ];
 
