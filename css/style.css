@@ -488,3 +488,126 @@ section { padding: 72px 0; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .product, .wa-float { transition: none; }
 }
+
+/* ── Finition premium ────────────────────────────────────── */
+/* Couche posée par-dessus le reste : mêmes couleurs de marque, avec un filet laiton, des ombres plus douces,
+   un grain léger sur les fonds sombres et l'italique Cormorant Garamond pour les accents. Aucun texte ne change. */
+:root {
+  --laiton: #B8955A;
+  --laiton-clair: #E3CD9C;
+  --filet: rgba(184, 149, 90, .45);
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+  --ombre-1: 0 1px 2px rgba(46, 29, 18, .05), 0 16px 36px -18px rgba(46, 29, 18, .22);
+  --ombre-2: 0 2px 4px rgba(46, 29, 18, .06), 0 34px 64px -28px rgba(46, 29, 18, .42);
+}
+body { text-rendering: optimizeLegibility; }
+::selection { background: var(--vert); color: var(--creme); }
+
+/* Titres plus fins et plus serrés, accents en italique */
+h2 { font-weight: 600; letter-spacing: -.022em; line-height: 1.1; }
+h3 { font-weight: 600; letter-spacing: -.01em; }
+.eyebrow { display: flex; align-items: center; gap: 12px; font-size: .7rem; font-weight: 600; letter-spacing: .24em; }
+.eyebrow::before { content: ''; flex: none; width: 28px; height: 1px; background: var(--laiton); }
+.section-head p:not(.eyebrow) { font-size: 1.05rem; line-height: 1.75; }
+
+/* Boutons */
+.btn { font-weight: 600; letter-spacing: .02em; transition: background .25s, color .25s, transform .25s, box-shadow .25s; }
+.btn-wa { background: linear-gradient(180deg, #22AA5A, var(--wa)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 12px 24px -12px rgba(29, 155, 80, .7); }
+.btn-wa:hover { background: linear-gradient(180deg, var(--wa), var(--wa-fonce)); }
+.btn-ghost { border-color: rgba(31, 74, 67, .45); }
+.btn-clair { box-shadow: 0 10px 22px -12px rgba(0, 0, 0, .45); }
+
+/* En-tête : liseré plus fin, filet laiton */
+.site-header { background: rgba(253, 250, 244, .9); -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); border-bottom-color: var(--filet); }
+.site-header::before { height: 3px; }
+.nav a:not(.btn) { font-size: .9rem; font-weight: 500; letter-spacing: .02em; }
+
+/* Accueil */
+.hero {
+  background:
+    var(--grain),
+    radial-gradient(60% 55% at 88% 6%, rgba(127, 163, 107, .24), transparent 70%),
+    radial-gradient(50% 55% at -4% 104%, rgba(142, 27, 43, .12), transparent 70%),
+    linear-gradient(180deg, var(--blanc), #F8F1E4);
+  border-bottom: 1px solid var(--filet);
+}
+.hero h1 { letter-spacing: -.035em; }
+.hero h1 em { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.12em; letter-spacing: -.01em; line-height: 1; margin-top: 4px; }
+.hero-sub { font-size: 1.1rem; line-height: 1.75; }
+.hero-stats { border-top-color: var(--filet); }
+.hero-stats strong { font-weight: 600; letter-spacing: -.02em; }
+.arch { box-shadow: var(--ombre-2); }
+.arch.has-photo { outline: 1px solid var(--filet); outline-offset: 12px; }
+.arch-caption { border: 1px solid var(--filet); letter-spacing: .03em; box-shadow: var(--ombre-1); }
+
+/* Bandeau */
+.strip { background: var(--grain), linear-gradient(90deg, var(--bordeaux-fonce), var(--bordeaux) 50%, var(--bordeaux-fonce)); }
+.strip ul { letter-spacing: .2em; }
+.strip li::before { width: 5px; height: 5px; background: var(--laiton-clair); }
+
+/* Étapes */
+.step { background: linear-gradient(180deg, #F8F1E4, var(--creme)); border: 1px solid rgba(184, 149, 90, .22); box-shadow: var(--ombre-1); }
+.step::before { font-family: var(--serif); font-style: italic; font-size: 2.8rem; font-weight: 500; }
+
+/* Produits */
+.produits { background: linear-gradient(180deg, var(--creme), #EFE4D0); }
+.product { border: 1px solid rgba(46, 29, 18, .07); box-shadow: var(--ombre-1); transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s, border-color .35s; }
+.product:hover { box-shadow: var(--ombre-2); border-color: var(--filet); }
+.product-visual.photo { background: var(--grain), radial-gradient(70% 80% at 50% 45%, #8A3B30 0%, #4E1D19 100%); }
+.product-visual.photo img { outline: 1px solid rgba(227, 205, 156, .35); outline-offset: 6px; }
+.chip { font-weight: 600; letter-spacing: .14em; font-size: .66rem; }
+.price { font-size: 1.05rem; letter-spacing: -.01em; }
+.bandeau { position: relative; overflow: hidden; box-shadow: var(--ombre-2); }
+.bandeau::after { content: ''; position: absolute; inset: 0; background: var(--grain); pointer-events: none; }
+.bandeau > * { position: relative; z-index: 1; }
+
+/* Plantes */
+.avertissement { border-left-color: var(--laiton); background: #FAF2E8; }
+.filter { font-weight: 600; letter-spacing: .02em; transition: background .2s, border-color .2s, color .2s; }
+.filter:hover { border-color: var(--vert); }
+.plant { border-color: rgba(46, 29, 18, .08); box-shadow: var(--ombre-1); transition: box-shadow .3s, border-color .3s; }
+.plant:hover { box-shadow: var(--ombre-2); border-color: var(--filet); }
+.latin { font-family: var(--serif); font-size: 1.02rem; }
+.recette { border-left-color: var(--laiton); background: linear-gradient(90deg, rgba(184, 149, 90, .14), rgba(184, 149, 90, .03)); }
+
+/* Sections sombres : grain léger et lueur laiton */
+.source { background: var(--grain), radial-gradient(60% 50% at 90% 0%, rgba(184, 149, 90, .16), transparent 70%), linear-gradient(165deg, #74142A 0%, var(--bordeaux-fonce) 60%, #3E0911 100%); }
+.source .eyebrow::before, .reseaux .eyebrow::before { background: var(--laiton-clair); }
+.episode { border-color: rgba(227, 205, 156, .18); background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02)); }
+.episode .num { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 2.4rem; color: var(--laiton-clair); }
+.reseaux { background: var(--grain), radial-gradient(55% 50% at 100% 0%, rgba(184, 149, 90, .14), transparent 70%), linear-gradient(160deg, var(--vert-2) 0%, var(--vert) 55%, #163731 100%); }
+.btn-reseau { border-color: rgba(227, 205, 156, .3); }
+.btn-reseau:hover { border-color: var(--laiton-clair); }
+
+/* Fondatrice */
+.portrait { box-shadow: var(--ombre-2); outline: 1px solid var(--filet); outline-offset: 12px; }
+.citation { border-left: 0; padding-left: 0; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.65rem; line-height: 1.3; }
+.citation::before { content: ''; display: block; width: 40px; height: 1px; margin-bottom: 18px; background: var(--laiton); }
+
+/* Boutique et FAQ */
+.boutique { background: linear-gradient(180deg, var(--creme), #EFE4D0); }
+.infos li { border: 1px solid rgba(46, 29, 18, .06); box-shadow: var(--ombre-1); }
+.faq details { border-color: rgba(46, 29, 18, .09); transition: border-color .2s, box-shadow .2s; }
+.faq details[open] { border-color: var(--filet); box-shadow: var(--ombre-1); }
+.faq summary { font-weight: 600; }
+.faq summary::after { color: var(--laiton); font-weight: 300; }
+
+/* Pied de page */
+.site-footer { background: var(--grain), linear-gradient(180deg, var(--vert), #163731); border-top-width: 3px; box-shadow: inset 0 1px 0 var(--filet); }
+.footer-slogan { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.3rem; color: var(--laiton-clair); }
+.footer-bottom { border-top-color: rgba(227, 205, 156, .2); }
+
+.wa-float { box-shadow: 0 0 0 4px rgba(253, 250, 244, .7), 0 14px 30px -8px rgba(0, 0, 0, .45); }
+
+/* Sur téléphone, le filet autour des photos reste à distance du bord de l'écran */
+@media (max-width: 899px) {
+  .arch.has-photo, .portrait { outline-offset: 6px; width: min(100% - 16px, 520px); }
+  .portrait { width: min(100% - 16px, 420px); }
+}
+@media (hover: none) {
+  .product:hover, .plant:hover { box-shadow: var(--ombre-1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product, .plant, .filter, .faq details { transition: none; }
+}
