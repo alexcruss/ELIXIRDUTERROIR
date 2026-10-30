@@ -77,4 +77,4 @@ sitemap.xml     plan du site pour Google
 
 ## Réalisation
 
-[Pierre Kossi DEGBOEVI](https://alexcruss.github.io/portfolio/)
+[Pierre Kossi DEGBOEVI](https://pierredegboevi.com/)
