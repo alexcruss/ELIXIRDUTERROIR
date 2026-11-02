@@ -70,10 +70,28 @@ section { padding: 72px 0; }
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 50px; padding: 0 24px; border-radius: 999px; border: 1.5px solid transparent;
   font-family: var(--sans); font-size: .98rem; font-weight: 500; text-decoration: none;
-  cursor: pointer; transition: background .2s, color .2s, transform .2s;
+  position: relative; overflow: hidden; isolation: isolate;
+  cursor: pointer; transition: background .25s, color .25s, border-color .25s, transform .25s, box-shadow .25s;
 }
-.btn:hover { transform: translateY(-1px); }
-.btn svg { width: 20px; height: 20px; flex: none; }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 14px 24px -10px rgba(31, 74, 67, .55); }
+.btn:active { transform: translateY(0) scale(.97); box-shadow: 0 4px 10px -6px rgba(31, 74, 67, .5); transition-duration: .08s; }
+.btn svg { width: 20px; height: 20px; flex: none; transition: transform .3s; }
+.btn:hover svg { transform: scale(1.15) rotate(-8deg); }
+/* Reflet lumineux qui traverse le bouton au survol */
+.btn::after {
+  content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: -60%; width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent);
+  transform: skewX(-20deg); pointer-events: none;
+}
+.btn:hover::after { left: 130%; transition: left .7s ease; }
+.btn-wa:hover { box-shadow: 0 14px 26px -10px rgba(29, 155, 80, .75); }
+.btn-ghost:hover, .bandeau-bordeaux .btn:hover { box-shadow: 0 14px 24px -10px rgba(142, 27, 43, .55); }
+.hero-actions .btn-wa, .wa-float::before { animation: halo 2.8s ease-out infinite; }
+.hero-actions .btn-wa:hover { animation: none; }
+@keyframes halo {
+  0% { box-shadow: 0 0 0 0 rgba(29, 155, 80, .5); }
+  70%, 100% { box-shadow: 0 0 0 16px rgba(29, 155, 80, 0); }
+}
 .btn-sm { min-height: 42px; padding: 0 18px; font-size: .9rem; }
 .btn-wa { background: var(--wa); color: #fff; }
 .btn-wa:hover { background: var(--wa-fonce); }
@@ -459,7 +477,9 @@ section { padding: 72px 0; }
   background: var(--wa); color: #fff; box-shadow: 0 12px 28px -8px rgba(0, 0, 0, .45);
   transition: transform .2s, background .2s;
 }
-.wa-float:hover { transform: scale(1.06); background: var(--wa-fonce); }
+.wa-float::before { content: ''; position: absolute; inset: 0; border-radius: 50%; }
+.wa-float:hover { transform: scale(1.1) rotate(-6deg); background: var(--wa-fonce); }
+.wa-float:active { transform: scale(.94); }
 .wa-float svg { width: 32px; height: 32px; }
 
 /* ── Fenêtre vidéo ───────────────────────────────────────── */
@@ -487,6 +507,9 @@ section { padding: 72px 0; }
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .product, .wa-float { transition: none; }
+  .hero-actions .btn-wa, .wa-float::before { animation: none; }
+  .btn::after { display: none; }
+  .btn:hover, .btn:hover svg { transform: none; }
 }
 
 /* ── Finition premium ────────────────────────────────────── */
