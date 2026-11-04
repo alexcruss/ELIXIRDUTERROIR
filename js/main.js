@@ -170,17 +170,27 @@ modale.addEventListener('close', () => { lecteur.innerHTML = ''; });
 /* ── Menu mobile ── */
 const nav = document.getElementById('nav');
 const toggle = document.querySelector('.nav-toggle');
-toggle.addEventListener('click', () => {
-  const ouvert = nav.classList.toggle('open');
+function reglerMenu(ouvert) {
+  nav.classList.toggle('open', ouvert);
   toggle.setAttribute('aria-expanded', String(ouvert));
   toggle.setAttribute('aria-label', ouvert ? 'Fermer le menu' : 'Ouvrir le menu');
+}
+toggle.addEventListener('click', () => reglerMenu(!nav.classList.contains('open')));
+nav.addEventListener('click', (e) => { if (e.target.closest('a')) reglerMenu(false); });
+/* On sort du menu comme on veut : Échap, un toucher à côté, ou le passage en grand écran. */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && nav.classList.contains('open')) { reglerMenu(false); toggle.focus(); }
 });
-nav.addEventListener('click', (e) => {
-  if (e.target.closest('a')) {
-    nav.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-  }
+document.addEventListener('pointerdown', (e) => {
+  if (nav.classList.contains('open') && !e.target.closest('#nav, .nav-toggle')) reglerMenu(false);
 });
+matchMedia('(min-width: 980px)').addEventListener('change', (e) => { if (e.matches) reglerMenu(false); });
+
+/* Bord de l'en-tête : visible seulement quand la page a défilé. */
+const entete = document.querySelector('.site-header');
+const marquerDefilement = () => entete.classList.toggle('scrolled', scrollY > 4);
+addEventListener('scroll', marquerDefilement, { passive: true });
+marquerDefilement();
 
 /* ── Apparition au défilement ── */
 const observateur = new IntersectionObserver((entrees) => {
