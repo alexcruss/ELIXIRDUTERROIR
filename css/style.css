@@ -18,8 +18,8 @@
   --bordeaux-clair: #F6E3E6;
   --vitrine: #4E1D19;
   --filet: rgba(46, 29, 18, .1);
-  --wa: #1D9B50;
-  --wa-fonce: #167D40;
+  --wa: #167D40;       /* texte blanc dessus : 5,2:1 (AA) */
+  --wa-fonce: #0F5F2F;
 
   /* Montserrat (Google Fonts) est la cousine libre de Century Gothic ; Century Gothic et Tahoma prennent le relais si elle ne charge pas. */
   --titres: 'Montserrat', 'Century Gothic', Tahoma, Arial, sans-serif;
@@ -49,6 +49,25 @@ button { font: inherit; }
 ::selection { background: var(--vert); color: var(--creme); }
 
 .wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
+
+/* Lien d'évitement pour la navigation au clavier */
+.skip { position: absolute; left: 12px; top: -64px; z-index: 100; background: var(--vert); color: #fff; padding: 12px 18px; border-radius: 8px; font-weight: 500; text-decoration: none; transition: top .2s; }
+.skip:focus { top: 12px; }
+
+/* Page « Mentions légales » */
+.legal { padding: 56px 0 96px; }
+.legal .wrap { max-width: 760px; }
+.legal h1 { font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 12px; }
+.legal h2 { font-size: 1.5rem; margin: 56px 0 16px; scroll-margin-top: 90px; }
+.legal h3 { margin: 24px 0 8px; }
+.legal p, .legal li { color: var(--doux); line-height: 1.75; margin-bottom: 12px; }
+.legal ul { padding-left: 22px; }
+.legal a { color: var(--vert); text-underline-offset: 3px; }
+.legal .maj { font-size: .875rem; }
+.legal-nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 20px 0 0; }
+.legal-nav a { display: inline-flex; align-items: center; min-height: 44px; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 0 20px; }
+.footer-legal a { display: inline-flex; align-items: center; min-height: 44px; }
 
 h1, h2, h3 { font-family: var(--titres); font-weight: 500; line-height: 1.15; letter-spacing: -.01em; color: var(--terre); }
 h2 { font-size: clamp(1.75rem, 4.6vw, 2.5rem); letter-spacing: -.02em; line-height: 1.1; }

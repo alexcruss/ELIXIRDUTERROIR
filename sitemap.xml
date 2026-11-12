@@ -9,4 +9,8 @@
     <image:image><image:loc>https://alexcruss.github.io/ELIXIRDUTERROIR/img/produits/melange-special.jpg</image:loc></image:image>
     <image:image><image:loc>https://alexcruss.github.io/ELIXIRDUTERROIR/img/produits/antibiox.jpg</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://alexcruss.github.io/ELIXIRDUTERROIR/mentions-legales.html</loc>
+    <lastmod>2026-11-12</lastmod>
+  </url>
 </urlset>
