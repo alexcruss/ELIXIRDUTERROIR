@@ -80,6 +80,7 @@
 }
 </script>
 <script>document.documentElement.classList.add('js')</script>
+<script src="js/anim-tete.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -137,9 +138,9 @@
           <a class="btn btn-ghost" href="#produits">Voir les produits</a>
         </div>
         <ul class="hero-stats" aria-label="La communauté TikTok">
-          <li><strong>63 K</strong><span>abonnés TikTok</span></li>
-          <li><strong>420 K</strong><span>j'aime</span></li>
-          <li><strong>786</strong><span>vidéos de conseils</span></li>
+          <li><strong data-to="63" data-suffix=" K">63 K</strong><span>abonnés TikTok</span></li>
+          <li><strong data-to="420" data-suffix=" K">420 K</strong><span>j'aime</span></li>
+          <li><strong data-to="786">786</strong><span>vidéos de conseils</span></li>
         </ul>
       </div>
       <div class="hero-visual">
@@ -413,5 +414,8 @@
 
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="js/anim.js?v=1"></script>
 </body>
 </html>

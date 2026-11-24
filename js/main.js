@@ -192,12 +192,6 @@ const marquerDefilement = () => entete.classList.toggle('scrolled', scrollY > 4)
 addEventListener('scroll', marquerDefilement, { passive: true });
 marquerDefilement();
 
-/* ── Apparition au défilement ── */
-const observateur = new IntersectionObserver((entrees) => {
-  entrees.forEach((en) => {
-    if (en.isIntersecting) { en.target.classList.add('visible'); observateur.unobserve(en.target); }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach((el) => observateur.observe(el));
+/* L'apparition au défilement est dans js/anim.js (GSAP). */
 
 document.getElementById('annee').textContent = new Date().getFullYear();

@@ -520,13 +520,10 @@ section { padding: 72px 0; }
 .modal-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px 16px; font-size: .875rem; }
 .modal-foot a:not(.btn) { color: var(--sable); }
 
-/* ── Apparition au défilement : un fondu court avec une légère montée ─── */
-.js .reveal { opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s cubic-bezier(.32, .72, 0, 1); }
-.js .reveal.visible { opacity: 1; transform: none; }
+/* L'apparition au défilement est faite par js/anim.js (GSAP) : les blocs glissent, aucun n'est caché. */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .product, .plant, .filter, .faq details, .wa-float { transition: none; }
   .btn:active, .filter:active, .wa-float:active { transform: none; }
   /* Fondu court, sans glissement */
