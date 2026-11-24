@@ -37,7 +37,7 @@
   var limite = window.innerHeight * 0.92;
   var selecteurs = [
     '.section-head', '.step', '.product', '.bandeau', '.plant',
-    '.portrait', '.fondatrice-grid > div:last-child', '.reseaux-liens', '.post',
+    '.portrait', '.reseaux-liens', '.post',
     '.infos li', '.map-ph', '.faq details'
   ];
   /* Les épisodes défilent de côté sur téléphone : seulement sur grand écran, où ils sont en grille. */
@@ -54,6 +54,25 @@
       onEnter: function (lot) {
         gsap.to(lot, { y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.09,
           overwrite: true, clearProps: 'transform' });
+      }
+    });
+  }
+
+  /* 2 bis. « Derrière la marque » : l'affiche se pose doucement (elle part d'un peu plus gros dans son cadre,
+        le cadre coupe le surplus) et le texte arrive ligne après ligne au lieu d'un seul bloc. Toujours sans
+        opacité : le texte reste lisible même si la section n'est jamais atteinte. */
+  var fond = document.querySelector('.fondatrice-grid');
+  var colonne = fond && fond.querySelector('.portrait + div');
+  if (colonne && fond.getBoundingClientRect().top > limite) {
+    var affiche = fond.querySelector('.portrait img');
+    var lignes = colonne.children;
+    gsap.set(lignes, { y: 22 });
+    if (affiche) gsap.set(affiche, { scale: 1.08 });
+    ScrollTrigger.create({
+      trigger: fond, start: 'top 78%', once: true,
+      onEnter: function () {
+        if (affiche) gsap.to(affiche, { scale: 1, duration: 1.6, ease: 'power2.out', clearProps: 'transform' });
+        gsap.to(lignes, { y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.1, clearProps: 'transform' });
       }
     });
   }
