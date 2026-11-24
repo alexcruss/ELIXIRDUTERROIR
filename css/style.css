@@ -424,11 +424,20 @@ section { padding: 72px 0; }
   position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: 12px;
   background: var(--vert-2);
 }
-.post img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.post img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: transform .5s cubic-bezier(.22, .61, .36, 1), filter .5s ease; }
 .post-reseau {
   position: absolute; left: 12px; bottom: 12px; display: flex; align-items: center; gap: 8px;
   padding: 4px 12px 4px 8px; border-radius: 6px; background: rgba(20, 12, 6, .7); color: #fff;
   font-size: .8125rem; font-weight: 500;
+  transition: background-color .25s ease, transform .35s cubic-bezier(.22, .61, .36, 1);
+}
+/* Survol (souris) et focus (clavier) : l'image se rapproche un peu, l'étiquette passe au bordeaux de la marque. */
+.post:focus-visible { outline: 3px solid var(--creme); outline-offset: 3px; }
+.post:focus-visible img { transform: scale(1.06); }
+.post:focus-visible .post-reseau { background: var(--bordeaux); transform: translateY(-3px); }
+@media (hover: hover) {
+  .post:hover img { transform: scale(1.06); filter: saturate(1.08); }
+  .post:hover .post-reseau { background: var(--bordeaux); transform: translateY(-3px); }
 }
 .post-reseau svg { width: 16px; height: 16px; }
 
@@ -535,6 +544,8 @@ section { padding: 72px 0; }
   html { scroll-behavior: auto; }
   .btn, .product, .plant, .filter, .faq details, .wa-float { transition: none; }
   .btn:active, .filter:active, .wa-float:active { transform: none; }
+  .post img, .post-reseau { transition: none; }
+  .post:hover img, .post:focus-visible img, .post:hover .post-reseau, .post:focus-visible .post-reseau { transform: none; }
   /* Fondu court, sans glissement */
   .nav, .video-modal { transform: none !important; transition: opacity .15s ease, visibility 0s .15s; }
   .nav.open { transition-delay: 0s; }
