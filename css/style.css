@@ -194,7 +194,7 @@ section { padding: 72px 0; }
 /* La photo est carrée et les bouteilles touchent les bords : cadre arrondi plutôt qu'en arche. */
 .arch.has-photo { aspect-ratio: 1; width: min(100%, 520px); border-radius: 20px; }
 .arch-caption {
-  position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%);
+  position: absolute; left: 50%; bottom: -16px; translate: -50% 0; /* « translate » et non « transform » : GSAP anime transform (js/anim.js) */
   white-space: nowrap; background: var(--blanc); color: var(--terre);
   font-family: var(--titres); font-size: .875rem; font-weight: 500;
   padding: 8px 20px; border-radius: var(--rayon-ctrl); border: 1px solid var(--filet);

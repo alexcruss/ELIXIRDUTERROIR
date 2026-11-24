@@ -31,6 +31,18 @@
     gsap.fromTo(feuilles, { y: -18 }, { y: 0, duration: 1.2, ease: 'power2.out', clearProps: 'transform' });
   }
 
+  /* Photo du haut de page : le cadre monte, la photo se pose (elle part d'un peu plus gros, le cadre arrondi
+        coupe le surplus) et la légende suit. Les bouteilles dessinées et les feuilles ci-dessus ne servent que
+        tant qu'il n'y a pas de photo (elles sont alors masquées par le CSS). Pas d'opacité. */
+  var cadreHero = document.querySelector('.hero .arch');
+  if (cadreHero) {
+    var photoHero = cadreHero.querySelector('img');
+    var legendeHero = document.querySelector('.hero .arch-caption');
+    gsap.fromTo(cadreHero, { y: 40 }, { y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15, clearProps: 'transform' });
+    if (photoHero) gsap.fromTo(photoHero, { scale: 1.12 }, { scale: 1, duration: 2.2, ease: 'power2.out', clearProps: 'transform' });
+    if (legendeHero) gsap.fromTo(legendeHero, { y: 18 }, { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.8, clearProps: 'transform' });
+  }
+
   /* 2. Apparition au défilement : seulement les blocs qui sont sous la partie visible au chargement.
         Ils sont décalés de 28 px puis remontent en entrant. Pas d'opacité : ils restent lisibles
         même si la personne ne défile jamais. */
