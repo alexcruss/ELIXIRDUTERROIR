@@ -213,6 +213,15 @@ section { padding: 72px 0; }
 }
 .strip li { display: flex; align-items: center; gap: 8px; }
 .strip li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #9CC488; }
+/* Bandeau défilant : js/main.js ajoute la classe « defile » et répète les mentions. Sans JavaScript, ou si la
+   personne demande moins de mouvement, le bandeau reste fixe et centré comme au-dessus. */
+.strip.defile { overflow: hidden; }
+.strip-piste { display: flex; width: max-content; animation: defile var(--duree, 30s) linear infinite; }
+.strip.defile ul { flex: none; flex-wrap: nowrap; justify-content: flex-start; gap: 0 48px; width: auto; max-width: none; margin: 0; padding: 16px 48px 16px 0; }
+.strip.defile li { white-space: nowrap; }
+.strip.defile:hover .strip-piste, .strip.defile:focus-within .strip-piste { animation-play-state: paused; }
+@keyframes defile { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .strip-piste { animation: none; } }
 
 /* ── Étapes ──────────────────────────────────────────────── */
 .steps { display: grid; gap: 16px; list-style: none; counter-reset: etape; }

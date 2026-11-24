@@ -194,4 +194,39 @@ marquerDefilement();
 
 /* L'apparition au défilement est dans js/anim.js (GSAP). */
 
+/* ── Bandeau défilant : les quatre mentions tournent sans fin, sauf si la personne a demandé moins de mouvement ── */
+(function () {
+  const bandeau = document.querySelector('.strip');
+  const liste = bandeau && bandeau.querySelector('ul');
+  if (!liste || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const mentions = [...liste.children].map((li) => li.textContent.trim());
+  const piste = document.createElement('div');
+  piste.className = 'strip-piste';
+  liste.replaceWith(piste);
+  bandeau.classList.add('defile');
+
+  function construire() {
+    /* Un groupe doit être plus large que l'écran, puis il est doublé : la boucle ne montre jamais de vide. */
+    piste.innerHTML = '';
+    const groupe = (repetitions, cache) => {
+      const ul = document.createElement('ul');
+      if (cache) ul.setAttribute('aria-hidden', 'true');
+      ul.innerHTML = Array.from({ length: repetitions }, (_, r) =>
+        mentions.map((t) => `<li${r || cache ? ' aria-hidden="true"' : ''}>${echapper(t)}</li>`).join('')).join('');
+      return ul;
+    };
+    let n = 1;
+    piste.append(groupe(n, false));
+    while (piste.firstChild.scrollWidth < bandeau.clientWidth && n < 8) {
+      n += 1;
+      piste.replaceChildren(groupe(n, false));
+    }
+    piste.append(groupe(n, true));
+    piste.style.setProperty('--duree', `${Math.round(piste.firstChild.scrollWidth / 45)}s`); /* environ 45 px par seconde */
+  }
+  construire();
+  let attente;
+  addEventListener('resize', () => { clearTimeout(attente); attente = setTimeout(construire, 200); });
+})();
+
 document.getElementById('annee').textContent = new Date().getFullYear();

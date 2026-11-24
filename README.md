@@ -45,6 +45,7 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 ## Technique
 
 - HTML, CSS et JavaScript, conçu d'abord pour le téléphone et léger à charger. Seule dépendance : GSAP 3.15.1 pour les animations (copie locale dans `vendor/`, licence gratuite, voir `vendor/README.md`)
+- Bandeau bordeaux sous le haut de page : défile en boucle (CSS, construit par `js/main.js`), s'arrête au survol, reste fixe si le visiteur a demandé moins de mouvement
 - Animations (`js/anim-tete.js` et `js/anim.js`) : le haut de page monte en cascade, les blocs glissent de 28 px en entrant à l'écran, les trois chiffres du haut de page comptent une fois (les vraies valeurs restent écrites dans `index.html`, attributs `data-to`). Rien n'est caché ni en fondu : une personne qui ne défile pas voit tout. Aucune animation si le visiteur a demandé moins de mouvement. **Après une modification de `js/anim.js`, augmenter son numéro de version dans `index.html` (`anim.js?v=2`)** : GitHub Pages garde les fichiers dix minutes.
 - Police Montserrat (Google Fonts), proche de Century Gothic ; Century Gothic, Tahoma et Arial en secours
 - Vidéos : miniatures enregistrées dans `img/videos/` (une par vidéo, nommée avec son identifiant TikTok) ; le lecteur officiel TikTok se charge seulement au clic
