@@ -52,7 +52,7 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 - Vidéos : miniatures enregistrées dans `img/videos/` (une par vidéo, nommée avec son identifiant TikTok) ; le lecteur officiel TikTok se charge seulement au clic
 - Produits : photos découpées dans les visuels Facebook et TikTok de la marque (`img/produits/`), à remplacer par de vraies photos produit
 - Sécurité : politique CSP en balise `<meta>` (scripts limités à ceux du site, un hash pour le petit script en ligne, `frame-src` limité au lecteur TikTok), referrer policy et `.well-known/security.txt` (`_config.yml` le fait publier). **Si le script en ligne de `index.html` change, recalculer son hash** avec `securiser.py` du skill `site-vitrine-pme`, sinon il est bloqué.
-- Déploiement automatique sur GitHub Pages à chaque push sur `main` (`.github/workflows/static.yml`)
+- Déploiement automatique sur GitHub Pages à chaque push sur `main` : Pages est réglé sur « Deploy from a branch » (`main`, racine), il n'y a pas de workflow. L'ancien `.github/workflows/static.yml` a été supprimé le 24/11/2026 : il doublait ce déploiement et échouait de façon irrégulière
 
 ## Référencement Google
 
