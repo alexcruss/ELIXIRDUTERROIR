@@ -32,10 +32,11 @@ Les textes fixes (fondatrice, boutique, FAQ) sont dans `index.html`.
 
 ## À demander à la cliente
 
-- [ ] Prénom et nom de la fondatrice, et quelques lignes sur son parcours
-- [ ] Repère précis de la boutique à Zanguéra (rue, point de repère) et jours d'ouverture
-- [ ] Prix des produits, et le nom du flacon rouge à étiquette blanche « Traitement… » vu sur les photos
-- [ ] Moyens de paiement et zones de livraison
+- [ ] Nom de famille de la fondatrice (le site dit « Mari », prénom donné le 24/11/2026) et quelques lignes sur son parcours ; les mentions légales gardent « nom et prénom à confirmer »
+- [ ] Repère précis de la boutique à Zanguéra (rue, point de repère) : Pierre a donné « Zanguéra » comme adresse le 24/11/2026, le site n'a donc pas de plan
+- [ ] Prix des produits (reçus sur WhatsApp, le site écrit « Prix sur WhatsApp »), et le nom du flacon rouge à étiquette blanche « Traitement… » vu sur les photos
+- [ ] Tarif de livraison (le site dit « livraison partout, écrivez-nous pour le tarif »)
+- [x] Jours d'ouverture (lundi au samedi) et moyens de paiement (Yas, Flooz, espèces), donnés le 24/11/2026
 - [ ] Logo en haute définition (SVG ou PNG transparent) : le site utilise pour l'instant le logo détouré d'un visuel TikTok (`img/logo-vert.png` pour fond clair, `img/logo-blanc.png` pour fond foncé, `img/favicon.png`)
 - [ ] Photos : l'original de la photo d'accueil (pour l'instant la photo de profil TikTok, signée « RFE »), un portrait, chaque produit
 - [ ] Noms locaux (éwé, mina) des plantes des fiches

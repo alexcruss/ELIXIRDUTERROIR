@@ -1,5 +1,5 @@
 /* Contenu du site : c'est ici qu'on modifie les produits, les fiches plantes et les épisodes.
-   Les vues TikTok sont relevées le 29/10/2026. Les champs « prix » à null s'affichent « à confirmer ». */
+   Les vues TikTok sont relevées le 29/10/2026. Les champs « prix » à null s'affichent « Prix sur WhatsApp ». */
 
 const SITE = {
   whatsapp: '22896376439',

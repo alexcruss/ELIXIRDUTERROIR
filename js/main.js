@@ -86,7 +86,7 @@ document.getElementById('produits-liste').innerHTML = PRODUITS.map((p) => `
       <p class="format">${echapper(p.format)}</p>
       <p>${echapper(p.texte)}</p>
       <div class="product-foot">
-        <span class="price">${p.prix ? echapper(p.prix) : 'Prix <span class="tbc">à confirmer</span>'}</span>
+        <span class="price">${p.prix ? echapper(p.prix) : 'Prix sur WhatsApp'}</span>
         <a class="btn btn-wa btn-sm" href="${waLien(`Bonjour Élixir du Terroir, je voudrais des informations sur « ${p.nom} ».`)}">${ICONE('i-wa')}Commander</a>
       </div>
     </div>
