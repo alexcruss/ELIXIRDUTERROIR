@@ -11,7 +11,7 @@ const SITE = {
      Tant que c'est null, le site affiche l'illustration. */
   photos: {
     accueil: 'img/fondatrice.jpg',   // photo de profil TikTok (1080 × 1080), à remplacer par l'original
-    portrait: null,  // format portrait 4:5, pour « Derrière la marque »
+    portrait: 'img/reseaux/p2.jpg',  // format portrait 4:5, pour « Derrière la marque » (visuel Instagram « La nature a ses secrets », choisi par Pierre le 24/11/2026)
   },
 };
 
