@@ -77,7 +77,7 @@ const vignette = (id, titre, vues) => `
 /* ── Produits ── */
 document.getElementById('produits-liste').innerHTML = PRODUITS.map((p) => `
   <article class="product reveal">
-    <div class="product-visual${p.image ? ' photo' : ''}"${p.image ? ` style="--img:url('${p.image}')"` : ''}>${p.image
+    <div class="product-visual${p.image ? ' photo' : ''}"${p.image ? ` style="--img:url('${new URL(p.image, document.baseURI).href}')"` : ''}>${p.image
       ? `<img src="${p.image}" alt="${echapper(p.nom)}" loading="lazy" decoding="async">`
       : bouteille(p.visuel)}</div>
     <div class="product-body">
@@ -230,3 +230,9 @@ marquerDefilement();
 })();
 
 document.getElementById('annee').textContent = new Date().getFullYear();
+
+
+/* ── Annonce de la foire : retirée le 14 décembre 2026, le lendemain de la fin de la Foire internationale de Lomé ── */
+if (new Date() >= new Date('2026-12-14T00:00:00')) {
+  document.querySelectorAll('.annonce, .annonce-foire').forEach((e) => e.remove());
+}

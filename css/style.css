@@ -161,6 +161,17 @@ section { padding: 72px 0; }
   .nav-toggle { display: none; }
 }
 
+/* ── Annonce (foire) : bandeau tout en haut, retiré par js/main.js après la fin de la foire ── */
+.annonce {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 20px;
+  min-height: 40px; padding: 8px 16px; background: var(--bordeaux-fonce); color: var(--creme);
+  font-size: .875rem; line-height: 1.4; text-align: center;
+}
+.annonce p strong { font-weight: 600; color: var(--blanc); }
+.annonce a { color: var(--blanc); font-weight: 600; text-underline-offset: 3px; }
+.annonce a:hover { color: #F2C2C9; }
+@media (min-width: 900px) { body:has(.annonce) .hero-visual { min-height: clamp(520px, calc(100svh - 66px - 40px), 780px); } }
+
 /* ── Accueil ─────────────────────────────────────────────── */
 /* Écran coupé en deux : vert sapin à gauche (le texte), bordeaux à droite (la photo). Sur téléphone, les deux moitiés s'empilent. */
 .hero { background: var(--vert); padding: 0; position: relative; }
