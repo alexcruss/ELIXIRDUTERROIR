@@ -77,7 +77,7 @@ const vignette = (id, titre, vues) => `
 /* ── Produits ── */
 document.getElementById('produits-liste').innerHTML = PRODUITS.map((p) => `
   <article class="product reveal">
-    <div class="product-visual${p.image ? ' photo' : ''}">${p.image
+    <div class="product-visual${p.image ? ' photo' : ''}"${p.image ? ` style="--img:url('${p.image}')"` : ''}>${p.image
       ? `<img src="${p.image}" alt="${echapper(p.nom)}" loading="lazy" decoding="async">`
       : bouteille(p.visuel)}</div>
     <div class="product-body">

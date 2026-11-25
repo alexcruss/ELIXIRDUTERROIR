@@ -274,7 +274,13 @@ section { padding: 72px 0; }
 .produits { background: var(--creme); }
 .product-grid { display: grid; gap: 20px; }
 @media (min-width: 620px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1040px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1040px) {
+  .product-grid { grid-template-columns: repeat(6, 1fr); }
+  .product { grid-column: span 2; }
+  /* Cinq produits : la dernière ligne (deux cartes) est centrée au lieu de laisser un trou à droite. */
+  .product:nth-child(4):nth-last-child(2) { grid-column: 2 / span 2; }
+  .product:nth-child(5):last-child { grid-column: 4 / span 2; }
+}
 .product {
   display: flex; flex-direction: column; overflow: hidden;
   background: var(--blanc); border: 1px solid var(--filet); border-radius: var(--rayon);
@@ -286,9 +292,19 @@ section { padding: 72px 0; }
   background: var(--sable);
 }
 .product-visual svg { height: 100%; width: auto; }
-/* Photo découpée : fond bordeaux-brun, comme les visuels de la marque */
-.product-visual.photo { align-items: center; height: 272px; padding: 16px; background: var(--vitrine); }
-.product-visual.photo img { height: 100%; width: auto; max-width: 100%; object-fit: contain; border-radius: 8px; }
+/* Photo découpée : les visuels de la marque sont des bandes étroites aux fonds différents (rouge, brun, vert).
+   La même photo, agrandie et floutée, sert de fond (variable --img posée par main.js) : plus de rectangle visible,
+   chaque carte prend la couleur de sa bouteille. La photo nette garde sa hauteur entière, bords adoucis. */
+.product-visual.photo { position: relative; overflow: hidden; isolation: isolate; align-items: stretch; height: 300px; padding: 0; background: var(--vitrine); }
+.product-visual.photo::before {
+  content: ''; position: absolute; inset: -32px; z-index: -1;
+  background: var(--img) center / cover no-repeat; filter: blur(24px) brightness(.55) saturate(1.15);
+}
+.product-visual.photo img {
+  height: 100%; width: auto; max-width: 100%; object-fit: contain; border-radius: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+}
 .product-body { display: flex; flex-direction: column; gap: 8px; flex: 1; padding: 20px 20px 24px; }
 .chip {
   align-self: flex-start; padding: 4px 12px; border-radius: 6px;
