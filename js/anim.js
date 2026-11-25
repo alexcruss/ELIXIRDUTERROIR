@@ -38,7 +38,8 @@
   if (cadreHero) {
     var photoHero = cadreHero.querySelector('img');
     var legendeHero = document.querySelector('.hero .arch-caption');
-    gsap.fromTo(cadreHero, { y: 40 }, { y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15, clearProps: 'transform' });
+    /* Sur grand écran la photo remplit toute la moitié droite : pas de montée du cadre (elle laisserait une bande vide en haut). */
+    if (!window.matchMedia('(min-width: 900px)').matches) gsap.fromTo(cadreHero, { y: 40 }, { y: 0, duration: 1.1, ease: 'power3.out', delay: 0.15, clearProps: 'transform' });
     if (photoHero) gsap.fromTo(photoHero, { scale: 1.12 }, { scale: 1, duration: 2.2, ease: 'power2.out', clearProps: 'transform' });
     if (legendeHero) gsap.fromTo(legendeHero, { y: 18 }, { y: 0, duration: 0.8, ease: 'power3.out', delay: 0.8, clearProps: 'transform' });
   }

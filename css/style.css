@@ -161,18 +161,30 @@ section { padding: 72px 0; }
 }
 
 /* ── Accueil ─────────────────────────────────────────────── */
-.hero { padding: 36px 0 64px; background: var(--blanc); }
-.hero-grid { display: grid; gap: 48px; align-items: center; }
-.hero h1 { font-size: clamp(2.25rem, 8vw, 3.5rem); font-weight: 600; line-height: 1.08; letter-spacing: -.025em; margin-bottom: 16px; color: var(--bordeaux); }
-.hero h1 em { display: block; font-style: normal; font-weight: 500; color: var(--vert); }
-.hero-sub { max-width: 520px; font-size: 1.0625rem; line-height: 1.7; color: var(--doux); }
+/* Écran coupé en deux : vert sapin à gauche (le texte), bordeaux à droite (la photo). Sur téléphone, les deux moitiés s'empilent. */
+.hero { background: var(--vert); padding: 0; position: relative; }
+.hero-scroll { display: none; }
+.hero-sub strong { font-weight: 600; color: var(--blanc); }
+.hero-grid { display: grid; gap: 0; align-items: center; }
+.hero-text, .hero-visual { padding-block: 48px; }
+.hero-text { background: var(--vert); box-shadow: 0 0 0 100vmax var(--vert); clip-path: inset(0 -100vmax); }
+.hero-visual { background: var(--bordeaux); box-shadow: 0 0 0 100vmax var(--bordeaux); clip-path: inset(0 -100vmax); padding-bottom: 64px; }
+.hero h1 { font-size: clamp(2.25rem, 8vw, 3.5rem); font-weight: 600; line-height: 1.08; letter-spacing: -.025em; margin-bottom: 16px; color: var(--blanc); }
+.hero h1 em { display: block; font-style: normal; font-weight: 500; color: #B9D3A8; }
+.hero .eyebrow { color: #F2C2C9; }
+.hero-sub { max-width: 520px; font-size: 1.0625rem; line-height: 1.7; color: rgba(220, 232, 224, .9); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.hero .btn-wa { background: var(--creme); color: var(--vert); }
+.hero .btn-wa svg { color: var(--wa); }
+.hero .btn-wa:hover { background: #fff; }
+.hero .btn-ghost { border-color: rgba(253, 250, 244, .55); color: var(--blanc); }
+.hero .btn-ghost:hover { background: var(--blanc); border-color: var(--blanc); color: var(--vert); }
 .hero-stats {
   display: grid; grid-template-columns: repeat(3, max-content); gap: 16px clamp(16px, 5vw, 40px); list-style: none;
-  margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--filet);
+  margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(253, 250, 244, .22);
 }
-.hero-stats strong { display: block; font-family: var(--titres); font-size: 1.75rem; font-weight: 500; line-height: 1.1; color: var(--vert); font-variant-numeric: tabular-nums; }
-.hero-stats span { font-size: .875rem; color: var(--doux); }
+.hero-stats strong { display: block; font-family: var(--titres); font-size: 1.75rem; font-weight: 500; line-height: 1.1; color: #B9D3A8; font-variant-numeric: tabular-nums; }
+.hero-stats span { font-size: .875rem; color: rgba(220, 232, 224, .85); }
 
 .hero-visual { position: relative; }
 .arch {
@@ -200,9 +212,30 @@ section { padding: 72px 0; }
   padding: 8px 20px; border-radius: var(--rayon-ctrl); border: 1px solid var(--filet);
 }
 
+@keyframes flecheBas { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .hero .hero-scroll svg { animation: none; } }
+
 @media (min-width: 900px) {
-  .hero { padding: 64px 0 96px; }
-  .hero-grid { grid-template-columns: 1.05fr .95fr; gap: 64px; }
+  .hero { background: linear-gradient(90deg, var(--vert) 50%, var(--bordeaux) 50%); }
+  .hero { overflow: hidden; }
+  .hero-grid { grid-template-columns: 1fr 1fr; width: 100%; margin: 0; align-items: stretch; }
+  .hero-text, .hero-visual { background: none; box-shadow: none; clip-path: none; }
+  /* Texte : s'aligne sur la grille du site (1160 px) à gauche, 56 px d'air avant le milieu. */
+  .hero-text { padding: 72px 56px 72px max(32px, calc((100vw - var(--max)) / 2)); display: flex; flex-direction: column; justify-content: center; }
+  /* Photo en pleine page : elle remplit toute la moitié droite, du haut au bas et jusqu'au bord de l'écran. */
+  .hero-visual { padding: 0; min-height: clamp(560px, calc(100svh - 66px), 820px); }
+  /* Flèche ronde au centre, sur la ligne de coupe, comme sur greendreams.pe : invite à descendre. */
+  .hero-scroll {
+    display: grid; place-items: center; position: absolute; left: 50%; bottom: 28px; translate: -50% 0; z-index: 5;
+    width: 48px; height: 48px; border-radius: 50%; color: var(--blanc);
+    border: 1.5px solid rgba(253, 250, 244, .8); background: rgba(46, 29, 18, .28); backdrop-filter: blur(4px);
+    transition: background .2s, color .2s;
+  }
+  .hero-scroll:hover, .hero-scroll:focus-visible { background: var(--blanc); color: var(--vert); }
+  .hero-scroll svg { animation: flecheBas 2.4s ease-in-out infinite; }
+  .hero-visual .arch.has-photo { position: absolute; inset: 0; width: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; margin: 0; }
+  .hero-visual .arch img { object-position: 50% 30%; }
+  .arch-caption { left: 64px; bottom: 36px; translate: none; background: rgba(46, 29, 18, .72); color: var(--blanc); border: 0; backdrop-filter: blur(6px); }
 }
 
 /* ── Bandeau ─────────────────────────────────────────────── */
