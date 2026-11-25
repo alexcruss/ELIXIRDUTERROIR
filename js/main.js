@@ -32,7 +32,7 @@ function bouteille({ type = 'liquide', liquide = '#6E1A26', etiquette = '#8C2333
     ? `<rect x="0" y="92" width="120" height="210" fill="${liquide}"/><rect x="0" y="92" width="120" height="5" fill="#fff" opacity=".2"/>`
     : `<rect x="0" y="70" width="120" height="230" fill="${type === 'feuilles' ? '#2F5228' : '#3E2616'}" opacity=".55"/>${morceaux(type, compteurSvg)}`;
   const texte = lignes.map((l, i) =>
-    `<text x="60" y="${190 + i * 17}" text-anchor="middle" font-family="Montserrat, 'Century Gothic', Arial, sans-serif" font-size="12" font-weight="700" fill="${texteEtiquette}">${echapper(l)}</text>`).join('');
+    `<text x="60" y="${190 + i * 17}" text-anchor="middle" font-family="Raleway, 'Century Gothic', Arial, sans-serif" font-size="12" font-weight="700" fill="${texteEtiquette}">${echapper(l)}</text>`).join('');
   return `<svg viewBox="0 0 120 300" aria-hidden="true">
     <defs><clipPath id="${id}"><path d="${forme}"/></clipPath></defs>
     <ellipse cx="60" cy="293" rx="46" ry="5" fill="#000" opacity=".18"/>
@@ -42,7 +42,7 @@ function bouteille({ type = 'liquide', liquide = '#6E1A26', etiquette = '#8C2333
     <path d="${forme}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>
     <rect x="21" y="150" width="78" height="80" rx="3" fill="${etiquette}"/>
     <rect x="25" y="154" width="70" height="72" rx="2" fill="none" stroke="${texteEtiquette}" stroke-opacity=".45"/>
-    <text x="60" y="169" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="5.2" letter-spacing=".9" fill="${texteEtiquette}" opacity=".85">ÉLIXIR DU TERROIR</text>
+    <text x="60" y="169" text-anchor="middle" font-family="Raleway, Arial, sans-serif" font-size="5.2" letter-spacing=".9" fill="${texteEtiquette}" opacity=".85">ÉLIXIR DU TERROIR</text>
     ${texte}
     <rect x="27" y="104" width="6" height="150" rx="3" fill="#fff" opacity=".22"/>
   </svg>`;
